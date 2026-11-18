@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaliar sem manipular · Guia de instrumentos psicológicos e neuropsicológicos</title>
+<meta name="description" content="Guia de instrumentos psicológicos e neuropsicológicos que não exigem manipulação de objetos, organizado por transtorno, com o que observar e referências.">
+<style>
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces-latin-200-normal.woff2) format("woff2");font-weight:200;font-style:normal;font-display:swap}
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces-latin-200-italic.woff2) format("woff2");font-weight:200;font-style:italic;font-display:swap}
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces-latin-800-normal.woff2) format("woff2");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces-latin-800-italic.woff2) format("woff2");font-weight:800;font-style:italic;font-display:swap}
+@font-face{font-family:"Liu Jian Mao Cao";src:url(fonts/LiuJianMaoCao-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+  --bg:#e9e9e9; --ink:#000; --green:#00846a; --green-2:#00ae8c; --on-green:#e9e9e9; --white:#fff;
+  --table-fill:rgba(215,215,215,.74); --input-fill:rgba(242,242,242,.62);
+  --dim:#999; --caption:#2b2b2b; --r-pill:5rem;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif; --hand:"Liu Jian Mao Cao",cursive;
+  --page:144rem; --grid:20rem;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:10px;scroll-behavior:smooth}
+body{
+  font-family:var(--serif);font-weight:200;color:var(--ink);background-color:var(--bg);
+  background-image:linear-gradient(to right,rgba(0,0,0,.1) 0 1px,transparent 1px),linear-gradient(to bottom,rgba(0,0,0,.1) 0 1px,transparent 1px);
+  background-size:var(--grid) var(--grid);background-position:calc(50vw - 70rem) 0;background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+em{font-style:italic;font-weight:400}
+.wrap{max-width:var(--page);margin:0 auto;padding:0 3.2rem}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:20;background:var(--bg);box-shadow:inset 0 -1px rgba(0,0,0,.1)}
+.hdr .wrap{display:flex;align-items:center;gap:3.2rem;height:8.3rem}
+.logo{font-weight:800;font-size:2rem;text-decoration:none;white-space:nowrap}
+.edition{font-style:italic;font-size:2rem;white-space:nowrap}
+.nav{display:flex;gap:2.8rem;margin-left:auto}
+.nav a{font-weight:400;font-size:2rem;text-decoration:none}
+.nav a:hover{text-decoration:underline;text-underline-offset:.4rem}
+.pill{display:inline-flex;align-items:center;gap:.8rem;border-radius:var(--r-pill);padding:.9rem 2rem;font:400 1.8rem/1 var(--serif);white-space:nowrap}
+.pill--green{background:var(--green);color:var(--on-green)}
+.pill--green sup{font-weight:200;font-size:1.2rem}
+
+/* hero */
+.hero{position:relative;min-height:calc(100vh - 8.3rem);display:grid;align-content:center;padding:8rem 0 10rem;overflow:hidden}
+.hero__kicker{font-size:clamp(2.2rem,2.4vw,3.2rem);line-height:1.5;text-align:center;max-width:70rem;margin:0 auto}
+.hero__title{font-weight:400;color:var(--green);text-transform:uppercase;text-align:center;line-height:.95;font-size:clamp(5.6rem,11.5vw,17rem);letter-spacing:-.02em;margin:3.2rem 0}
+.hero__title span{display:block}
+.hero__byline{text-align:center;font-size:2.4rem;line-height:2.7rem}
+.hero__byline b{font-weight:400}
+.coord{position:absolute;font-family:var(--hand);font-size:3rem;line-height:1;opacity:.47;white-space:nowrap;transform:rotate(var(--tilt,0deg));pointer-events:none;user-select:none}
+.coord.is-pop{color:var(--green);opacity:.9}
+.scroll{display:flex;justify-content:center;margin-top:5.6rem}
+.scroll a{font-family:var(--hand);font-size:2.6rem;text-decoration:none;opacity:.7;transform:rotate(-4deg)}
+
+/* manifesto stats */
+.stats{padding:12rem 0}
+.stats p{font-size:clamp(3rem,5.2vw,7.2rem);line-height:1.15;letter-spacing:-.02em;font-weight:200;max-width:120rem}
+.stats b{font-weight:400;color:var(--green)}
+.stats .dim{color:#acacac}
+
+/* section heads */
+.sec{padding:10rem 0 14rem;scroll-margin-top:6rem}
+.eyebrow{font-weight:800;font-size:1.3rem;line-height:2rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.sec h2{font-weight:200;font-size:clamp(4rem,6.4vw,7.2rem);line-height:1.05;margin:.8rem 0 2.4rem;letter-spacing:-.02em}
+.lead{font-size:clamp(2rem,2.4vw,3rem);line-height:1.35;max-width:84rem;margin-bottom:5.6rem}
+
+/* chips (conditions) */
+.chips{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:3.2rem}
+.chip{white-space:nowrap;appearance:none;border:1px solid var(--green);background:transparent;color:var(--ink);border-radius:var(--r-pill);padding:.8rem 1.8rem;font:400 1.7rem/1.2 var(--serif);cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.chip:hover{background:rgba(0,132,106,.08)}
+.chip[aria-pressed="true"]{background:var(--green);color:var(--on-green)}
+.chip small{font:200 1.3rem var(--serif);opacity:.75;margin-left:.4rem}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:1.6rem;align-items:center;margin-bottom:2.4rem}
+.field{flex:1 1 32rem;display:flex;align-items:center;height:5.9rem;background:var(--input-fill);border:.5px solid #000;border-radius:var(--r-pill);padding:0 2.4rem}
+.field input{flex:1;border:0;background:transparent;font:200 2.2rem var(--serif);font-style:italic;color:var(--ink);outline:none}
+.field input::placeholder{color:#555}
+.seg{display:flex;gap:.6rem;flex-wrap:wrap}
+.seg button{appearance:none;border:1px solid #000;background:transparent;border-radius:var(--r-pill);padding:.8rem 1.6rem;font:400 1.6rem var(--serif);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.count{font-style:italic;font-size:1.8rem;margin-left:auto}
+
+/* table card */
+.card{background:var(--table-fill);border-radius:.4rem;overflow:hidden}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font:400 1.6rem/2.4rem var(--serif);text-align:left;padding:1.8rem 2rem;border-bottom:.5px solid #000;white-space:nowrap}
+.tbl td{font-size:1.9rem;line-height:1.45;padding:2rem;vertical-align:top;border-bottom:.5px solid rgba(0,0,0,.55)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .inst{font-weight:400;font-size:2.2rem;line-height:1.25;min-width:22rem}
+.tbl .meta{display:block;margin-top:.8rem;font-size:1.5rem;font-style:italic;font-weight:200;color:var(--caption)}
+.tbl .obs{max-width:62ch}
+.tbl .ref{font-size:1.5rem;line-height:1.5;color:var(--caption);min-width:24rem;max-width:36rem}
+.tbl .ref a{text-underline-offset:.3rem}
+.tbl .ref .none{font-style:italic;color:#666}
+.tag{display:inline-block;margin-top:.8rem;border-radius:var(--r-pill);padding:.3rem 1.1rem;font:400 1.3rem/1.6 var(--serif);border:1px solid var(--green);color:var(--green);white-space:nowrap}
+.tag--ind{border-color:#000;color:#000}
+.tag--both{background:var(--green);color:var(--on-green)}
+.tag--man{border-style:dashed;border-color:#000;color:#000;margin-left:.4rem}
+.empty{padding:4rem 2rem;font-style:italic;font-size:2rem}
+
+/* notes */
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(30rem,1fr));gap:3.2rem 4.8rem}
+.note h3{font:800 1.3rem/2rem var(--serif);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.note h3 span{color:var(--green)}
+.note p{font-size:2.2rem;line-height:3.2rem}
+
+/* footer */
+.ftr{padding:6rem 0 8rem;box-shadow:inset 0 1px rgba(0,0,0,.1)}
+.ftr .wrap{display:flex;flex-wrap:wrap;gap:2.4rem;justify-content:space-between;align-items:baseline}
+.ftr p{font-size:1.6rem;line-height:2.4rem;max-width:80rem}
+.ftr .sign{font-family:var(--hand);font-size:3rem;opacity:.6;transform:rotate(-5deg)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (max-width:1080px){
+  .hdr .wrap{height:6.4rem;gap:1.6rem}
+  .edition{display:none}
+  .coord{display:none}.coord[data-keep]{display:block}
+}
+@media (max-width:760px){
+  .wrap{padding:0 2rem}
+  .nav{display:none}
+  .logo{font-size:1.9rem}
+  .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:1rem;margin-right:-2rem;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .seg{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%}
+  .seg button{white-space:nowrap}
+  .hdr .pill{display:none}
+  .tbl thead{display:none}
+  .tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%}
+  .tbl tr{border-bottom:.5px solid #000;padding:1.2rem 0}
+  .tbl tr:last-child{border-bottom:0}
+  .tbl td{border:0;padding:.8rem 2rem}
+  .tbl td[data-l]::before{content:attr(data-l);display:block;font:800 1.1rem/1.8rem var(--serif);letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:.2rem}
+  .tbl .ref{max-width:none}
+  .count{margin-left:0}
+}
+@media (prefers-reduced-motion:no-preference){
+  .hero__title span,.hero__kicker,.hero__byline{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .hero__title span:nth-child(2){animation-delay:.12s}
+  .hero__byline{animation-delay:.25s}
+  .coord{animation:pop .7s ease both;animation-delay:calc(var(--i,0) * 90ms + .4s)}
+}
+@keyframes rise{from{opacity:0;transform:translateY(2.4rem)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;color:var(--green);transform:rotate(var(--tilt)) scale(.6)}60%{opacity:.9;color:var(--green)}100%{transform:rotate(var(--tilt)) scale(1)}}
+
+/* ===== novos recursos ===== */
+.ibtn{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-thickness:.5px;text-underline-offset:.4rem}
+.ibtn:hover{color:var(--green)}
+.cmp{appearance:none;margin-top:.8rem;margin-left:.4rem;border:1px solid #000;background:transparent;border-radius:var(--r-pill);padding:.2rem 1rem;font:400 1.3rem/1.6 var(--serif);cursor:pointer}
+.cmp[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+.ev{display:inline-block;margin-right:.6rem;border-radius:.3rem;padding:0 .6rem;font:800 1.1rem/1.8rem var(--serif);letter-spacing:.06em;color:var(--on-green);background:var(--green);vertical-align:.1rem}
+.ev--B{background:#2b2b2b}.ev--C{background:#6b6b6b}.ev--D{background:transparent;color:#555;border:1px solid #555}
+.sel{height:5.9rem;border:.5px solid #000;border-radius:var(--r-pill);background:var(--input-fill);padding:0 2rem;font:400 1.8rem var(--serif);color:var(--ink);max-width:100%}
+.lbl{display:flex;flex-direction:column;gap:.6rem;font:800 1.2rem/1.6rem var(--serif);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(24rem,1fr));gap:2rem;margin-bottom:3.2rem;align-items:end}
+.check{display:flex;align-items:center;gap:1rem;font:400 1.8rem var(--serif);height:5.9rem}
+.check input{width:2rem;height:2rem;accent-color:var(--green)}
+.btn{appearance:none;border:1px solid #000;background:transparent;border-radius:var(--r-pill);padding:1rem 2.2rem;font:400 1.7rem var(--serif);cursor:pointer;white-space:nowrap}
+.btn--g{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.btn:hover{opacity:.85}
+.acts{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2.4rem;align-items:center}
+.small{font-size:1.5rem;font-style:italic;color:var(--caption)}
+dialog{margin:auto;border:0;border-radius:.6rem;padding:0;max-width:min(96rem,94vw);width:100%;background:var(--bg);color:var(--ink);box-shadow:0 2rem 6rem rgba(0,0,0,.25)}
+body:has(dialog[open]) .cbar{display:none}
+dialog::backdrop{background:rgba(0,0,0,.35)}
+.dlg{padding:4rem;max-height:86vh;overflow:auto}
+.dlg h3{font-weight:200;font-size:clamp(3rem,4vw,4.8rem);line-height:1.05;margin:.6rem 0 2rem}
+.dlg .x{position:sticky;top:0;float:right;appearance:none;border:1px solid #000;background:var(--bg);border-radius:var(--r-pill);padding:.6rem 1.6rem;font:400 1.6rem var(--serif);cursor:pointer}
+.kv{display:grid;grid-template-columns:minmax(14rem,22rem) 1fr;gap:1.2rem 2.4rem;margin:2rem 0}
+.kv dt{font:800 1.2rem/2.4rem var(--serif);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.kv dd{font-size:1.9rem;line-height:1.45}
+.dlg h4{font:800 1.3rem/2rem var(--serif);letter-spacing:.08em;text-transform:uppercase;margin:3.2rem 0 1.2rem}
+.dlg ul{list-style:none}
+.dlg li{font-size:1.8rem;line-height:1.45;padding:1.2rem 0;border-top:.5px solid rgba(0,0,0,.3)}
+.dlg li b{font-weight:400}
+.cbar{position:fixed;left:50%;bottom:2.4rem;transform:translateX(-50%);z-index:30;display:none;gap:1.2rem;align-items:center;background:var(--ink);color:var(--white);border-radius:var(--r-pill);padding:1rem 1rem 1rem 2.4rem;font:400 1.7rem var(--serif);box-shadow:0 1rem 3rem rgba(0,0,0,.3)}
+.cbar.on{display:flex}
+.cbar .btn{border-color:var(--white);color:var(--white)}
+.cbar .btn--g{border-color:var(--green)}
+.cmpt{width:100%;border-collapse:collapse;margin-top:1rem}
+.cmpt th,.cmpt td{text-align:left;vertical-align:top;padding:1.2rem 1.4rem;border-bottom:.5px solid rgba(0,0,0,.4);font-size:1.6rem;line-height:1.45}
+.cmpt th{font:800 1.2rem/2rem var(--serif);letter-spacing:.08em;text-transform:uppercase;color:var(--green);width:16rem}
+.cmpt thead td{font-weight:400;font-size:2.2rem}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(30rem,1fr));gap:0 4.8rem}
+.gloss div{padding:2rem 0;border-top:.5px solid rgba(0,0,0,.4)}
+.gloss dt{font-weight:400;font-size:2.4rem;margin-bottom:.6rem}
+.gloss dd{font-size:1.9rem;line-height:1.45;color:var(--caption)}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(26rem,1fr));gap:2rem;margin:3.2rem 0}
+.levels p{font-size:1.9rem;line-height:1.45}
+.prose p{font-size:2.1rem;line-height:1.5;max-width:84rem;margin-bottom:2rem}
+.prose b{font-weight:400}
+@media (max-width:760px){
+  .dlg{padding:2.4rem}
+  .kv{grid-template-columns:1fr;gap:.2rem}
+  .kv dd{margin-bottom:1.2rem}
+  .cbar{left:2rem;right:2rem;transform:none;justify-content:space-between}
+  .cmpt th{width:auto}
+}
+@media print{
+  body{background:#fff}
+  .hdr,.hero,.stats,.ftr,.controls,.chips,.acts,.form,.cbar,.cmp,dialog,.sec[data-noprint]{display:none!important}
+  body[data-print] .sec{display:none}
+  body[data-print="bateria"] #bateria,body[data-print="catalogo"] #catalogo,body[data-print="transtornos"] #transtornos{display:block!important;padding:0}
+  .card{background:none}
+  .tbl td,.tbl th{font-size:10pt;padding:4pt 6pt}
+  a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="#topo">Avaliar sem manipular</a>
+    <span class="edition">Edição 2026</span>
+    <nav class="nav" aria-label="Seções">
+      <a href="#transtornos">Por transtorno</a>
+      <a href="#bateria">Bateria</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#glossario">Glossário</a>
+      <a href="#metodo">Método</a>
+    </nav>
+    <span class="pill pill--green"><span id="hdr-n">115</span> instrumentos</span>
+  </div>
+</header>
+
+<main id="topo">
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="wrap">
+      <p class="hero__kicker">Guia de testes psicológicos e neuropsicológicos, com destaque para os que <em>dispensam a manipulação de objetos</em></p>
+      <h1 class="hero__title" id="hero-t"><span>Avaliar sem</span><span>manipular</span></h1>
+      <p class="hero__byline"><em>organizado por transtorno,</em> <b>com o que observar, dados de aplicação e referências</b></p>
+      <div class="scroll"><a href="#transtornos">role para ver ↓</a></div>
+    </div>
+    <span class="coord" data-keep style="top:6%;left:7%;--tilt:-6deg;--i:0">TDAH</span>
+    <span class="coord" style="top:22%;right:9%;--tilt:4deg;--i:1">Raven</span>
+    <span class="coord" style="top:62%;left:4%;--tilt:7deg;--i:2">SNAP-IV</span>
+    <span class="coord is-pop" data-keep style="bottom:14%;right:6%;--tilt:-5deg;--i:3">TEA</span>
+    <span class="coord" style="top:40%;right:3%;--tilt:-8deg;--i:4">RAVLT</span>
+    <span class="coord" style="bottom:16%;left:22%;--tilt:3deg;--i:5">M-CHAT</span>
+    <span class="coord" style="top:5%;left:58%;--tilt:6deg;--i:6">Stroop</span>
+  </section>
+
+  <section class="stats">
+    <div class="wrap">
+      <p><b id="s-inst">115</b> instrumentos, <b id="s-sem">74</b> <span class="dim">sem manipulação de objetos pelo paciente</span>, <b id="s-cond">38</b> transtornos e condições, <b id="s-ref">0</b> <span class="dim">de</span> <b id="s-rows">0</b> indicadores <span class="dim">com artigo.</span></p>
+    </div>
+  </section>
+
+  <section class="sec" id="transtornos" aria-labelledby="t-h">
+    <div class="wrap">
+      <p class="eyebrow">01 · Por transtorno</p>
+      <h2 id="t-h">O que observar em cada teste</h2>
+      <p class="lead">Escolha um transtorno ou condição para ver os instrumentos indicados, o padrão que sugere o quadro e a fonte. Clique no nome de um instrumento para abrir a ficha completa.</p>
+      <div class="chips" id="chips" role="group" aria-label="Transtornos e condições"></div>
+      <div class="controls">
+        <label class="field"><span class="sr">Buscar instrumento</span><input id="t-q" type="search" placeholder="Buscar instrumento ou indicador"></label>
+        <div class="seg" id="t-app" role="group" aria-label="Aplicação">
+          <button aria-pressed="true" data-v="">Todas</button><button aria-pressed="false" data-v="Direta">Direta</button><button aria-pressed="false" data-v="Indireta">Indireta</button><button aria-pressed="false" data-v="Direta + Indireta">Direta + Indireta</button>
+        </div>
+        <div class="seg" id="t-man" role="group" aria-label="Manipulação"><button aria-pressed="true" data-v="">Todos</button><button aria-pressed="false" data-v="0">Sem manipulação</button><button aria-pressed="false" data-v="1">Exige manipulação</button></div>
+        <span class="count" id="t-count"></span>
+      </div>
+      <div class="acts"><button class="btn" id="t-csv">Baixar planilha (CSV)</button><button class="btn" id="t-print">Imprimir ou salvar em PDF</button></div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Instrumento</th><th>O que observar</th><th>Referência</th></tr></thead>
+          <tbody id="t-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="bateria" aria-labelledby="b-h">
+    <div class="wrap">
+      <p class="eyebrow">02 · Monte sua bateria</p>
+      <h2 id="b-h">Sugestão de bateria</h2>
+      <p class="lead">Informe a queixa, a idade e as limitações do paciente. O guia lista os instrumentos que se encaixam, com os que têm artigo de melhor nível primeiro. É um ponto de partida: a escolha final é clínica.</p>
+      <div class="form">
+        <label class="lbl">Queixa ou condição<select class="sel" id="b-cond"></select></label>
+        <label class="lbl">Idade do paciente<select class="sel" id="b-age">
+          <option value="0">0 a 2 anos</option><option value="1">3 a 5 anos</option><option value="2" selected>6 a 11 anos</option><option value="3">12 a 17 anos</option><option value="4">18 a 59 anos</option><option value="5">60 anos ou mais</option>
+        </select></label>
+        <label class="lbl">Quem vai responder<select class="sel" id="b-who">
+          <option value="">Paciente e informantes</option><option value="Direta">Só o paciente</option><option value="Indireta">Só pais, professores ou cuidadores</option>
+        </select></label>
+        <label class="check"><input type="checkbox" id="b-man"> Paciente pode manipular objetos (lápis, peças, computador)</label>
+      </div>
+      <div class="acts"><span class="count" id="b-count" style="margin:0 auto 0 0"></span><button class="btn" id="b-csv">Baixar planilha (CSV)</button><button class="btn btn--g" id="b-print">Imprimir ou salvar em PDF</button></div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Instrumento</th><th>Por que incluir</th><th>Aplicação</th><th>Referência</th></tr></thead>
+          <tbody id="b-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="catalogo" aria-labelledby="c-h">
+    <div class="wrap">
+      <p class="eyebrow">03 · Catálogo</p>
+      <h2 id="c-h">Os <span id="c-n">115</span> instrumentos</h2>
+      <p class="lead">Todos os instrumentos levantados. Os que <em>exigem manipulação</em> de lápis, peças, cartas, brinquedos ou computador aparecem marcados. Use <em>comparar</em> para ver até três lado a lado.</p>
+      <div class="controls">
+        <label class="field"><span class="sr">Buscar no catálogo</span><input id="c-q" type="search" placeholder="Buscar por nome, função ou contexto"></label>
+        <div class="seg" id="c-man" role="group" aria-label="Manipulação"><button aria-pressed="true" data-v="">Todos</button><button aria-pressed="false" data-v="0">Sem manipulação</button><button aria-pressed="false" data-v="1">Exige manipulação</button></div>
+        <div class="seg" id="c-tipo" role="group" aria-label="Tipo"><button aria-pressed="true" data-v="">Todos os tipos</button><button aria-pressed="false" data-v="P">Privativos</button><button aria-pressed="false" data-v="N">Não privativos</button><button aria-pressed="false" data-v="S">Sem versão brasileira</button><button aria-pressed="false" data-v="E">Entrevistas</button></div>
+        <div class="seg" id="c-grp" role="group" aria-label="Grupo"></div>
+        <span class="count" id="c-count"></span>
+      </div>
+      <div class="acts"><button class="btn" id="c-csv">Baixar planilha (CSV)</button><button class="btn" id="c-print">Imprimir ou salvar em PDF</button></div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Instrumento</th><th>Faixa etária</th><th>Aplicação</th><th>Função avaliada</th><th>Contextos mais comuns</th><th>Referência</th></tr></thead>
+          <tbody id="c-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="cuidados" aria-labelledby="n-h" data-noprint>
+    <div class="wrap">
+      <p class="eyebrow">04 · Antes de usar</p>
+      <h2 id="n-h">Cuidados de uso</h2>
+      <div class="notes">
+        <div class="note"><h3><span>i.</span> SATEPSI</h3><p>Use como teste psicológico só o que tem parecer favorável no SATEPSI, e apenas na modalidade aprovada (presencial, informatizada ou online). O tipo indicado em cada ficha é provável; confira em <a href="https://satepsi.cfp.org.br" target="_blank" rel="noopener"><em>satepsi.cfp.org.br</em></a>.</p></div>
+        <div class="note"><h3><span>ii.</span> Forma de resposta</h3><p>Ler os itens em voz alta e anotar pelo paciente só vale se o manual permitir; fora disso, a comparação com as normas perde a validade.</p></div>
+        <div class="note"><h3><span>iii.</span> Pontos de corte</h3><p>Os cortes vêm da literatura e das versões originais. Quando houver norma brasileira no manual em uso, ela prevalece.</p></div>
+        <div class="note"><h3><span>iv.</span> Diagnóstico</h3><p>Nenhum resultado isolado fecha diagnóstico. Ele depende da integração com anamnese, observação e critérios do DSM ou da CID.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="glossario" aria-labelledby="g-h" data-noprint>
+    <div class="wrap">
+      <p class="eyebrow">05 · Glossário</p>
+      <h2 id="g-h">Termos de avaliação</h2>
+      <dl class="gloss" id="gloss"></dl>
+    </div>
+  </section>
+
+  <section class="sec" id="metodo" aria-labelledby="m-h" data-noprint>
+    <div class="wrap">
+      <p class="eyebrow">06 · Método</p>
+      <h2 id="m-h">Como o guia foi feito</h2>
+      <div class="prose">
+        <p>As referências foram buscadas em periódicos indexados (SciELO, PubMed, LILACS, PePSIC e Redalyc), com preferência por estudos brasileiros de validação ou normatização e por metanálises. Dissertações, manuais e sites comerciais não contam como artigo; quando só havia isso, o indicador aparece como <em>sem artigo indexado</em>.</p>
+        <p>Cada referência recebe um <b>nível de evidência</b>:</p>
+      </div>
+      <div class="levels" id="levels"></div>
+      <div class="prose">
+        <p><b>Limites.</b> O site do SATEPSI não pôde ser consultado diretamente; o tipo de cada instrumento é a classificação provável e deve ser conferido antes do uso. Tempos de aplicação são aproximados. Pontos de corte só aparecem quando constam do artigo citado ou do manual de referência.</p>
+        <p><b>Revisão.</b> Conteúdo revisado em <span id="rev"></span>. Recomenda-se revisão por um segundo neuropsicólogo antes de uso institucional.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <p>Material de referência clínica, revisado em <span id="rev2"></span>. As faixas etárias e os tempos são aproximados e não substituem os manuais dos testes.</p>
+    <span class="sign">bons atendimentos</span>
+  </div>
+</footer>
+
+<div class="cbar" id="cbar"><span id="cbar-t"></span><button class="btn" id="cbar-clear">Limpar</button><button class="btn btn--g" id="cbar-go">Comparar</button></div>
+<dialog id="dlg"><div class="dlg" id="dlg-c"></div></dialog>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var I=window.INSTRUMENTOS,R=window.REFS,T=window.TRANSTORNOS,CR=window.CATREF||{},M=window.META||{},TIPO=window.TIPO,AC=window.ACESSO,EV=window.EVID||{},EVL=window.EVIDLAB;
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function norm(s){return String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()}
+  function tag(a){var c=a==="Indireta"?"tag tag--ind":a==="Direta + Indireta"?"tag tag--both":"tag";return '<span class="'+c+'">'+esc(a)+'</span>'}
+  function evb(k){var e=EV[k];return e?'<span class="ev ev--'+e+'" title="'+esc(EVL[e])+'">'+e+'</span>':''}
+  function refHtml(k){var x=k&&R[k];return x?evb(k)+(x[1]?'<a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>':esc(x[0])):'<span class="none">Sem artigo indexado encontrado; conferir o manual</span>'}
+  function refText(k){var x=k&&R[k];return x?x[0]+(x[1]?" ("+x[1]+")":""):""}
+  var byName={};I.forEach(function(r){byName[r[0]]=r});
+  function man(n){var r=byName[n];return r&&r[7]?1:0}
+  function nameBtn(n,label){return '<button class="ibtn" data-ficha="'+esc(n)+'">'+esc(label||n)+'</button>'}
+  function catRef(n){return CR[n==="MINI / MINI-Kid"?"MINI":n]}
+
+  // idade: devolve [min,max] em anos a partir do texto da faixa
+  var WORDS=[["primeira infancia",0,5],["pre-escola",4,6],["idade escolar",6,14],["criancas",3,11],["adolescentes",12,17],["adultos",18,59],["idosos",60,99],["cuidadores",0,99],["pais",0,99],["todas",0,99],["ver manual",0,99]];
+  function ages(f){
+    var s=norm(f).replace(/(\d+)a\d+m/g,"$1"),lo=99,hi=-1,found=false;
+    WORDS.forEach(function(w){if(s.indexOf(w[0])>=0){lo=Math.min(lo,w[1]);hi=Math.max(hi,w[2]);found=true}});
+    var nums=(s.match(/\d+/g)||[]).map(Number);
+    if(nums.length){
+      var a=nums[0],b=nums.length>1?nums[1]:null;
+      if(/º|ano do ef|ef i|ef ii/.test(s)&&!/anos/.test(s)){a=a+5;b=(b==null?a:b+5)}
+      else if(/mes/.test(s)&&!/anos/.test(s)){a=a/12;b=b==null?a:b/12;if(/adultos/.test(s))b=99}
+      else if(/ou mais|acima/.test(s)){b=99}
+      else if(b==null){b=a}
+      lo=Math.min(lo,a);hi=Math.max(hi,b);found=true;
+    }
+    if(/mental acima de 2/.test(s)){lo=2;hi=99}
+    return found?[lo,hi]:[0,99];
+  }
+  var BANDS=[[0,2.99],[3,5.99],[6,11.99],[12,17.99],[18,59.99],[60,120]];
+  function fits(f,band){var a=ages(f),b=BANDS[band];return a[0]<=b[1]&&a[1]>=b[0]}
+
+  // números
+  var conds=[];T.forEach(function(t){if(conds.indexOf(t[0])<0)conds.push(t[0])});
+  var C=I.filter(function(r){return r[0]!=="MINI-Kid"}).map(function(r){return r[0]==="MINI"?["MINI / MINI-Kid","Adultos / 6 a 17 anos","Direta + Indireta","Entrevista (MINI-Kid também com os pais)",r[4],r[5],"Psiquiatria adulta e infantil, atenção primária, pesquisa",0]:r});
+  M["MINI / MINI-Kid"]=M["MINI"];
+  function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v}
+  set("s-inst",C.length);set("hdr-n",C.length);set("c-n",C.length);
+  set("s-sem",C.filter(function(r){return !r[7]}).length);set("s-cond",conds.length);
+  set("s-ref",T.filter(function(t){return t[3]}).length);set("s-rows",T.length);
+  set("rev",window.REVISAO);set("rev2",window.REVISAO);
+
+  function segs(id,fn){var el=document.getElementById(id);el.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;el.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});fn(b.getAttribute("data-v"))})}
+  function csv(name,head,rows){
+    var q=function(v){v=String(v==null?"":v);return /[";\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+    var txt="﻿"+[head].concat(rows).map(function(r){return r.map(q).join(";")}).join("\r\n");
+    if(window.claude&&window.claude.use){window.claude.use("downloads").then(function(d){if(d)return d.save({filename:name,data:txt});alertBox("Este visualizador não permite baixar arquivos. No site publicado o botão funciona.")}).catch(function(){});return}
+    var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/csv;charset=utf-8"}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
+  }
+  function printSec(id){document.body.setAttribute("data-print",id);window.print();setTimeout(function(){document.body.removeAttribute("data-print")},500)}
+  function slug(s){return norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
+
+  // ===== 01 por transtorno =====
+  var cur="TDAH",app="",q="",tman="";
+  var chips=document.getElementById("chips");
+  chips.innerHTML=conds.map(function(c){var n=T.filter(function(t){return t[0]===c}).length;return '<button class="chip" aria-pressed="'+(c===cur)+'" data-c="'+esc(c)+'">'+esc(c)+'<small>'+n+'</small></button>'}).join("");
+  chips.addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;cur=b.getAttribute("data-c");chips.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed",x===b)});renderT()});
+  document.getElementById("t-q").addEventListener("input",function(e){q=norm(e.target.value.trim());renderT()});
+  segs("t-app",function(v){app=v;renderT()});
+  segs("t-man",function(v){tman=v;renderT()});
+  function rowsT(){return T.filter(function(t){var i=byName[t[1]];return t[0]===cur&&(!app||i[2]===app)&&(!tman||String(man(t[1]))===tman)&&(!q||norm(t[1]+" "+t[2]).indexOf(q)>=0)})}
+  function renderT(){
+    var rows=rowsT();
+    set("t-count",rows.length+(rows.length===1?" instrumento":" instrumentos"));
+    document.getElementById("t-body").innerHTML=rows.length?rows.map(function(t){
+      var i=byName[t[1]],m=M[t[1]]||[];
+      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(t[1])+'<span class="meta">'+esc(i[1])+(m[2]?' · '+esc(m[2]):'')+'</span>'+tag(i[2])+(i[7]?'<span class="tag tag--man">Exige manipulação</span>':'')+'</td><td class="obs" data-l="O que observar">'+esc(t[2])+'</td><td class="ref" data-l="Referência">'+refHtml(t[3])+'</td></tr>'
+    }).join(""):'<tr><td class="empty" colspan="3">Nenhum instrumento com esse filtro.</td></tr>';
+  }
+  document.getElementById("t-csv").onclick=function(){csv("indicadores-"+slug(cur)+".csv",["Condição","Instrumento","Faixa etária","Aplicação","O que observar","Referência","Nível de evidência"],rowsT().map(function(t){var i=byName[t[1]];return [t[0],t[1],i[1],i[2],t[2],refText(t[3]),EV[t[3]]?EVL[EV[t[3]]]:""]}))};
+  document.getElementById("t-print").onclick=function(){printSec("transtornos")};
+
+  // ===== 02 bateria =====
+  var bc=document.getElementById("b-cond");
+  bc.innerHTML=conds.map(function(c){return '<option>'+esc(c)+'</option>'}).join("");
+  ["b-cond","b-age","b-who","b-man"].forEach(function(id){document.getElementById(id).addEventListener("change",renderB)});
+  var ORD={A:0,B:1,C:2,D:3};
+  function rowsB(){
+    var c=bc.value,band=+document.getElementById("b-age").value,who=document.getElementById("b-who").value,canMan=document.getElementById("b-man").checked;
+    var seen={};
+    return T.filter(function(t){
+      if(t[0]!==c||seen[t[1]]||/^Não é marcador/.test(t[2]))return false;
+      var i=byName[t[1]];
+      if(!fits(i[1],band))return false;
+      if(!canMan&&i[7])return false;
+      if(who==="Direta"&&i[2]==="Indireta")return false;
+      if(who==="Indireta"&&i[2]==="Direta")return false;
+      seen[t[1]]=1;return true;
+    }).sort(function(a,b){var ea=a[3]?ORD[EV[a[3]]]:9,eb=b[3]?ORD[EV[b[3]]]:9;return ea-eb});
+  }
+  function renderB(){
+    var rows=rowsB();
+    set("b-count",rows.length?rows.length+(rows.length===1?" instrumento sugerido":" instrumentos sugeridos"):"Nenhum instrumento para essa combinação");
+    document.getElementById("b-body").innerHTML=rows.length?rows.map(function(t){
+      var i=byName[t[1]],m=M[t[1]]||[];
+      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(t[1])+'<span class="meta">'+esc(i[1])+'</span>'+tag(i[2])+'</td><td class="obs" data-l="Por que incluir">'+esc(t[2])+'</td><td data-l="Aplicação">'+esc(m[2]||"")+'<span class="meta">'+esc(m[3]||"")+(m[0]?' · '+esc(TIPO[m[0]]):'')+'</span></td><td class="ref" data-l="Referência">'+refHtml(t[3])+'</td></tr>'
+    }).join(""):'<tr><td class="empty" colspan="4">Tente outra faixa etária, inclua informantes ou permita manipulação.</td></tr>';
+  }
+  document.getElementById("b-csv").onclick=function(){csv("bateria-"+slug(bc.value)+".csv",["Instrumento","Faixa etária","Aplicação","Por que incluir","Tempo","Formato","Tipo no SATEPSI (provável)","Referência","Nível de evidência"],rowsB().map(function(t){var i=byName[t[1]],m=M[t[1]]||[];return [t[1],i[1],i[2],t[2],m[2],m[3],TIPO[m[0]],refText(t[3]),EV[t[3]]?EVL[EV[t[3]]]:""]}))};
+  document.getElementById("b-print").onclick=function(){printSec("bateria")};
+
+  // ===== 03 catálogo =====
+  var grp="",cq="",cman="",ctipo="",picked=[];
+  var groups=[];C.forEach(function(r){if(groups.indexOf(r[5])<0)groups.push(r[5])});
+  var cg=document.getElementById("c-grp");
+  cg.innerHTML='<button aria-pressed="true" data-v="">Todas as formas</button>'+groups.map(function(g){return '<button aria-pressed="false" data-v="'+esc(g)+'">'+esc(g)+'</button>'}).join("");
+  segs("c-grp",function(v){grp=v;renderC()});segs("c-man",function(v){cman=v;renderC()});segs("c-tipo",function(v){ctipo=v;renderC()});
+  document.getElementById("c-q").addEventListener("input",function(e){cq=norm(e.target.value.trim());renderC()});
+  function rowsC(){return C.filter(function(r){var m=M[r[0]]||[];return(!grp||r[5]===grp)&&(!cman||String(r[7]?1:0)===cman)&&(!ctipo||m[0]===ctipo)&&(!cq||norm(r.slice(0,7).join(" ")).indexOf(cq)>=0)})}
+  function renderC(){
+    var rows=rowsC();
+    set("c-count",rows.length+(rows.length===1?" instrumento":" instrumentos"));
+    document.getElementById("c-body").innerHTML=rows.length?rows.map(function(r){
+      var m=M[r[0]]||[],on=picked.indexOf(r[0])>=0;
+      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(r[0])+'<span class="meta">'+esc(r[5])+'</span>'+tag(r[2])+(r[7]?'<span class="tag tag--man">Exige manipulação</span>':'')+'<button class="cmp" aria-pressed="'+on+'" data-cmp="'+esc(r[0])+'">'+(on?'✓ comparando':'+ comparar')+'</button></td><td data-l="Faixa etária">'+esc(r[1])+'</td><td data-l="Aplicação">'+esc(r[3])+'<span class="meta">'+esc(m[2]||"")+'</span></td><td data-l="Função avaliada">'+esc(r[4])+'</td><td data-l="Contextos">'+esc(r[6])+'</td><td class="ref" data-l="Referência">'+refHtml(catRef(r[0]))+'</td></tr>'
+    }).join(""):'<tr><td class="empty" colspan="6">Nenhum instrumento com esse filtro.</td></tr>';
+  }
+  document.getElementById("c-csv").onclick=function(){csv("catalogo-instrumentos.csv",["Instrumento","Faixa etária","Aplicação","Como responde","Função avaliada","Forma de resposta","Contextos","Exige manipulação","Tipo no SATEPSI (provável)","Acesso","Tempo","Formato","Leitura","Ponto de corte","Referência","Nível de evidência"],rowsC().map(function(r){var m=M[r[0]]||[],k=catRef(r[0]);return [r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7]?"Sim":"Não",TIPO[m[0]],AC[m[1]],m[2],m[3],m[4],m[5],refText(k),EV[k]?EVL[EV[k]]:""]}))};
+  document.getElementById("c-print").onclick=function(){printSec("catalogo")};
+
+  // comparar
+  var cbar=document.getElementById("cbar");
+  document.getElementById("c-body").addEventListener("click",function(e){var b=e.target.closest("[data-cmp]");if(!b)return;var n=b.getAttribute("data-cmp"),ix=picked.indexOf(n);if(ix>=0)picked.splice(ix,1);else{if(picked.length>=3)picked.shift();picked.push(n)}renderC();bar()});
+  function bar(){cbar.classList.toggle("on",picked.length>0);set("cbar-t",picked.length+(picked.length===1?" selecionado":" selecionados")+" (até 3)")}
+  document.getElementById("cbar-clear").onclick=function(){picked=[];renderC();bar()};
+  document.getElementById("cbar-go").onclick=function(){
+    if(picked.length<2){alertBox("Escolha pelo menos dois instrumentos no catálogo.");return}
+    var rs=picked.map(function(n){return C.filter(function(r){return r[0]===n})[0]});
+    var lines=[["Faixa etária",function(r){return r[1]}],["Aplicação",function(r){return r[2]}],["Como responde",function(r){return r[3]}],["Função avaliada",function(r){return r[4]}],["Tempo",function(r){return (M[r[0]]||[])[2]}],["Formato",function(r){return (M[r[0]]||[])[3]}],["Leitura",function(r){return (M[r[0]]||[])[4]}],["Tipo no SATEPSI",function(r){return TIPO[(M[r[0]]||[])[0]]}],["Acesso",function(r){return AC[(M[r[0]]||[])[1]]}],["Ponto de corte",function(r){return (M[r[0]]||[])[5]||"Ver manual"}],["Exige manipulação",function(r){return r[7]?"Sim":"Não"}],["Condições no guia",function(r){var n=r[0]==="MINI / MINI-Kid"?"MINI":r[0];return T.filter(function(t){return t[1]===n}).map(function(t){return t[0]}).join("; ")||"—"}]];
+    var h='<button class="x" data-close>Fechar</button><p class="eyebrow">Comparação</p><h3>'+rs.map(function(r){return esc(r[0])}).join(" · ")+'</h3><div style="overflow:auto"><table class="cmpt"><thead><tr><th></th>'+rs.map(function(r){return '<td>'+esc(r[0])+'</td>'}).join("")+'</tr></thead><tbody>'+lines.map(function(l){return '<tr><th>'+l[0]+'</th>'+rs.map(function(r){return '<td>'+esc(l[1](r))+'</td>'}).join("")+'</tr>'}).join("")+'<tr><th>Referência</th>'+rs.map(function(r){return '<td class="ref">'+refHtml(catRef(r[0]))+'</td>'}).join("")+'</tr></tbody></table></div>';
+    openDlg(h);
+  };
+
+  // ficha
+  var dlg=document.getElementById("dlg"),dc=document.getElementById("dlg-c");
+  function openDlg(h){dc.innerHTML=h;if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","");dc.scrollTop=0}
+  function alertBox(t){openDlg('<button class="x" data-close>Fechar</button><p style="font-size:2rem;padding-top:1rem">'+esc(t)+'</p>')}
+  dlg.addEventListener("click",function(e){if(e.target===dlg||e.target.closest("[data-close]"))dlg.close()});
+  document.addEventListener("click",function(e){var b=e.target.closest("[data-ficha]");if(!b)return;ficha(b.getAttribute("data-ficha"))});
+  function ficha(n){
+    var r=n==="MINI / MINI-Kid"?C.filter(function(x){return x[0]===n})[0]:byName[n];if(!r)return;
+    var m=M[n]||[],key=n==="MINI / MINI-Kid"?"MINI":n,k=catRef(n);
+    var ind=T.filter(function(t){return t[1]===key||(n==="MINI / MINI-Kid"&&t[1]==="MINI-Kid")});
+    var kv=[["Faixa etária",r[1]],["Aplicação",r[2]],["Como responde",r[3]],["Função avaliada",r[4]],["Forma de resposta",r[5]],["Exige manipulação",r[7]?"Sim":"Não"],["Tempo aproximado",m[2]],["Formato",m[3]],["Leitura",m[4]],["Ponto de corte",m[5]||"Ver manual da edição em uso"],["Tipo no SATEPSI",(TIPO[m[0]]||"")+" (provável; conferir)"],["Acesso",AC[m[1]]],["Contextos mais comuns",r[6]]];
+    var h='<button class="x" data-close>Fechar</button><p class="eyebrow">Ficha do instrumento</p><h3>'+esc(n)+'</h3>'+tag(r[2])+(r[7]?'<span class="tag tag--man">Exige manipulação</span>':'')
+      +'<dl class="kv">'+kv.map(function(x){return '<dt>'+x[0]+'</dt><dd>'+esc(x[1]||"—")+'</dd>'}).join("")+'</dl>'
+      +'<h4>Referência do instrumento</h4><p class="ref" style="font-size:1.7rem;line-height:1.5">'+refHtml(k)+'</p>'
+      +'<h4>O que observar, por condição ('+ind.length+')</h4><ul>'+(ind.length?ind.map(function(t){return '<li><b>'+esc(t[0])+'.</b> '+esc(t[2])+'<br><span class="small">'+(t[3]?refHtml(t[3]):'Sem artigo indexado para este indicador')+'</span></li>'}).join(""):'<li>Ainda sem indicadores por condição no guia.</li>')+'</ul>'
+      +'<p class="small" style="margin-top:2.4rem">Situação no SATEPSI: <a href="https://satepsi.cfp.org.br" target="_blank" rel="noopener">consultar satepsi.cfp.org.br</a></p>';
+    openDlg(h);
+  }
+
+  // glossário e níveis
+  document.getElementById("gloss").innerHTML=window.GLOSSARIO.map(function(g){return '<div><dt>'+esc(g[0])+'</dt><dd>'+esc(g[1])+'</dd></div>'}).join("");
+  var cnt={};Object.keys(R).forEach(function(k){var e=EV[k];if(e)cnt[e]=(cnt[e]||0)+1});
+  document.getElementById("levels").innerHTML=["A","B","C","D"].map(function(e){return '<p><span class="ev ev--'+e+'">'+e+'</span> '+esc(EVL[e])+' <span class="small">('+(cnt[e]||0)+' referências)</span></p>'}).join("");
+
+  renderT();renderB();renderC();
+})();
+</script>
+</body>
+</html>
