@@ -1,4 +1,8 @@
-# Avaliar com evidência
+<img src="neuromapa-simbolo.svg" width="56" alt="NeuroMapa">
+
+# NeuroMapa · Avaliar com evidência
+
+Plataforma criada e administrada pelo **Neurotestes**.
 
 Guia de testes psicológicos e neuropsicológicos por transtorno: o que observar, dados de aplicação, referências e montagem de bateria.
 
