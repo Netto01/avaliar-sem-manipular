@@ -1,4 +1,4 @@
-# Avaliar sem manipular
+# Avaliar com evidência
 
 Guia de testes psicológicos e neuropsicológicos por transtorno: o que observar, dados de aplicação, referências e montagem de bateria.
 

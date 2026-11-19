@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avaliar sem manipular · Guia de instrumentos psicológicos e neuropsicológicos</title>
+<title>Avaliar com evidência · Guia de instrumentos psicológicos e neuropsicológicos</title>
 <meta name="description" content="Guia de instrumentos psicológicos e neuropsicológicos que não exigem manipulação de objetos, organizado por transtorno, com o que observar e referências.">
 <style>
 @font-face{font-family:"Fraunces";src:url(fonts/fraunces-latin-200-normal.woff2) format("woff2");font-weight:200;font-style:normal;font-display:swap}
@@ -217,7 +217,7 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
 <body>
 <header class="hdr">
   <div class="wrap">
-    <a class="logo" href="#topo">Avaliar sem manipular</a>
+    <a class="logo" href="#topo">Avaliar com evidência</a>
     <span class="edition">Edição 2026</span>
     <nav class="nav" aria-label="Seções">
       <a href="#transtornos">Por transtorno</a>
@@ -233,9 +233,9 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
 <main id="topo">
   <section class="hero" aria-labelledby="hero-t">
     <div class="wrap">
-      <p class="hero__kicker">Guia de testes psicológicos e neuropsicológicos, com destaque para os que <em>dispensam a manipulação de objetos</em></p>
-      <h1 class="hero__title" id="hero-t"><span>Avaliar sem</span><span>manipular</span></h1>
-      <p class="hero__byline"><em>organizado por transtorno,</em> <b>com o que observar, dados de aplicação e referências</b></p>
+      <p class="hero__kicker"><span id="k-n">115</span> testes psicológicos e neuropsicológicos, com o que observar e <em>o artigo que embasa</em></p>
+      <h1 class="hero__title" id="hero-t"><span>Avaliar com</span><span>evidência</span></h1>
+      <p class="hero__byline"><em>organizado por transtorno,</em> <b>com dados de aplicação, fichas e montagem de bateria</b></p>
       <div class="scroll"><a href="#transtornos">role para ver ↓</a></div>
     </div>
     <span class="coord" data-keep style="top:6%;left:7%;--tilt:-6deg;--i:0">TDAH</span>
@@ -412,7 +412,7 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
   var C=I.filter(function(r){return r[0]!=="MINI-Kid"}).map(function(r){return r[0]==="MINI"?["MINI / MINI-Kid","Adultos / 6 a 17 anos","Direta + Indireta","Entrevista (MINI-Kid também com os pais)",r[4],r[5],"Psiquiatria adulta e infantil, atenção primária, pesquisa",0]:r});
   M["MINI / MINI-Kid"]=M["MINI"];
   function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v}
-  set("s-inst",C.length);set("hdr-n",C.length);set("c-n",C.length);
+  set("s-inst",C.length);set("k-n",C.length);set("hdr-n",C.length);set("c-n",C.length);
   set("s-sem",C.filter(function(r){return !r[7]}).length);set("s-cond",conds.length);
   set("s-ref",T.filter(function(t){return t[3]}).length);set("s-rows",T.length);
   set("rev",window.REVISAO);set("rev2",window.REVISAO);
