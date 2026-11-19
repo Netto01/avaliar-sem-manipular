@@ -49,7 +49,10 @@ em{font-style:italic;font-weight:400}
 .hero{position:relative;min-height:calc(100vh - 8.3rem);display:grid;align-content:center;padding:8rem 0 10rem;overflow:hidden}
 .hero__kicker{font-size:clamp(2.2rem,2.4vw,3.2rem);line-height:1.5;text-align:center;max-width:70rem;margin:0 auto}
 .hero__title{font-weight:400;color:var(--green);text-transform:uppercase;text-align:center;line-height:.95;font-size:clamp(5.6rem,11.5vw,17rem);letter-spacing:-.02em;margin:3.2rem 0}
-.hero__title span{display:block}
+.hero__title .ln{display:block;overflow:hidden;padding:.14em 0 .06em;margin:-.14em 0 -.06em}
+.hero__title .w{display:inline}
+.hero__title .wd{display:inline-block;white-space:nowrap}
+.hero__title .ch{display:inline-block;will-change:transform}
 .hero__byline{text-align:center;font-size:2.4rem;line-height:2.7rem}
 .hero__byline b{font-weight:400}
 .coord{position:absolute;font-family:var(--hand);font-size:3rem;line-height:1;opacity:.47;white-space:nowrap;transform:rotate(var(--tilt,0deg));pointer-events:none;user-select:none}
@@ -142,12 +145,23 @@ em{font-style:italic;font-weight:400}
   .count{margin-left:0}
 }
 @media (prefers-reduced-motion:no-preference){
-  .hero__title span,.hero__kicker,.hero__byline{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-  .hero__title span:nth-child(2){animation-delay:.12s}
-  .hero__byline{animation-delay:.25s}
-  .coord{animation:pop .7s ease both;animation-delay:calc(var(--i,0) * 90ms + .4s)}
+  .hero__kicker,.hero__byline{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .hero__kicker{animation-delay:.05s}
+  .hero__byline{animation-delay:.9s}
+  .scroll{animation:rise .9s cubic-bezier(.2,.7,.2,1) 1.2s both}
+  .coord{animation:pop .7s ease both;animation-delay:calc(var(--i,0) * 90ms + .8s)}
+  .js-anim .hero__title .ch{transform:translateY(115%)}
+  .js-anim .hero__title .ch.in{animation:chup .75s cubic-bezier(.2,.8,.2,1) var(--d,0s) forwards}
+  .js-anim .hero__title .ch.out{animation:chout .4s cubic-bezier(.6,0,.8,.4) var(--d,0s) forwards}
+  .rv{opacity:0;transform:translateY(3.2rem);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--rd,0s)}
+  .rv.on{opacity:1;transform:none}
+  .scroll a{display:inline-block;animation:nudge 2.4s ease-in-out 2.4s infinite}
 }
+@media print{.rv{opacity:1!important;transform:none!important}}
 @keyframes rise{from{opacity:0;transform:translateY(2.4rem)}to{opacity:1;transform:none}}
+@keyframes chup{from{transform:translateY(115%)}to{transform:translateY(0)}}
+@keyframes chout{from{transform:translateY(0);opacity:1}to{transform:translateY(-80%);opacity:0}}
+@keyframes nudge{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-4deg) translateY(.6rem)}}
 @keyframes pop{0%{opacity:0;color:var(--green);transform:rotate(var(--tilt)) scale(.6)}60%{opacity:.9;color:var(--green)}100%{transform:rotate(var(--tilt)) scale(1)}}
 
 /* ===== novos recursos ===== */
@@ -234,7 +248,7 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
   <section class="hero" aria-labelledby="hero-t">
     <div class="wrap">
       <p class="hero__kicker"><span id="k-n">115</span> testes psicológicos e neuropsicológicos, com o que observar e <em>o artigo que embasa</em></p>
-      <h1 class="hero__title" id="hero-t"><span>Avaliar com</span><span>evidência</span></h1>
+      <h1 class="hero__title" id="hero-t" aria-label="Avaliar com evidência"><span class="ln" aria-hidden="true"><span class="w">Avaliar com</span></span><span class="ln" aria-hidden="true"><span class="w" id="rot">evidência</span></span></h1>
       <p class="hero__byline"><em>organizado por transtorno,</em> <b>com dados de aplicação, fichas e montagem de bateria</b></p>
       <div class="scroll"><a href="#transtornos">role para ver ↓</a></div>
     </div>
@@ -533,6 +547,54 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
   document.getElementById("levels").innerHTML=["A","B","C","D"].map(function(e){return '<p><span class="ev ev--'+e+'">'+e+'</span> '+esc(EVL[e])+' <span class="small">('+(cnt[e]||0)+' referências)</span></p>'}).join("");
 
   renderT();renderB();renderC();
+})();
+</script>
+<script>
+(function(){
+  if(!window.matchMedia||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  document.documentElement.classList.add("js-anim");
+  function split(el,txt,base,cls){
+    el.textContent="";var i=0;
+    txt.split(" ").forEach(function(word,wi){
+      if(wi)el.appendChild(document.createTextNode(" "));
+      var wd=document.createElement("span");wd.className="wd";
+      Array.from(word).forEach(function(c){var s=document.createElement("span");s.className="ch "+cls;s.textContent=c;s.style.setProperty("--d",(base+i*.035).toFixed(3)+"s");wd.appendChild(s);i++});
+      el.appendChild(wd);i++;
+    });
+  }
+  var ws=document.querySelectorAll("#hero-t .w");
+  split(ws[0],ws[0].textContent,.15,"in");
+  var rot=document.getElementById("rot");
+  split(rot,rot.textContent,.45,"in");
+  var words=["critério","método","precisão","evidência"],k=0;
+  function next(){
+    if(k>=words.length)return;
+    var chs=rot.querySelectorAll(".ch");
+    chs.forEach(function(c,i){c.classList.remove("in");c.style.setProperty("--d",(i*.025).toFixed(3)+"s");c.classList.add("out")});
+    setTimeout(function(){split(rot,words[k],0,"in");k++;if(k<words.length)setTimeout(next,1500)},400+chs.length*25);
+  }
+  setTimeout(next,2600);
+
+  // contadores
+  function count(el,dur,delay){
+    var to=parseInt(el.textContent,10);if(!to)return;el.textContent="0";
+    setTimeout(function(){var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)},delay||0);
+  }
+  var kn=document.getElementById("k-n");if(kn)count(kn,1400,200);
+
+  // revelar ao rolar
+  var sel=".stats p,.sec .eyebrow,.sec h2,.sec .lead,.chips,.controls,.form,.acts,.card,.notes .note,.gloss>div,.levels p,.prose p";
+  var els=document.querySelectorAll(sel);
+  if(!("IntersectionObserver" in window))return;
+  els.forEach(function(el){
+    el.classList.add("rv");
+    var sib=el.parentElement?Array.prototype.indexOf.call(el.parentElement.children,el):0;
+    if(el.matches(".notes .note,.gloss>div,.levels p"))el.style.setProperty("--rd",((sib%4)*.08)+"s");
+  });
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(!e.isIntersecting)return;var el=e.target;el.classList.add("on");io.unobserve(el);
+    if(el.matches(".stats p"))el.querySelectorAll("b").forEach(function(b,i){count(b,1200,150+i*120)});
+  })},{threshold:.12,rootMargin:"0px 0px -5% 0px"});
+  els.forEach(function(el){io.observe(el)});
 })();
 </script>
 </body>
