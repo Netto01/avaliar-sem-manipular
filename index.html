@@ -288,6 +288,46 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
   .tbl td,.tbl th{font-size:10pt;padding:4pt 6pt}
   a{text-decoration:none}
 }
+
+/* ecossistema */
+.eco{padding:8rem 0 2rem}
+.eco .eyebrow{margin-bottom:1.2rem}
+.eco h2{font-weight:200;font-size:clamp(3.4rem,4.8vw,5.6rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:3.2rem}
+.eco-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(32rem,1fr));gap:2.4rem}
+.eco-card{display:flex;flex-direction:column;gap:1.6rem;background:var(--table-fill);border-radius:.6rem;padding:3.2rem;text-decoration:none;color:var(--ink);transition:transform .3s ease,box-shadow .3s ease}
+.eco-card:hover{transform:translateY(-.4rem);box-shadow:0 1.6rem 3.2rem rgba(0,0,0,.08)}
+.eco-card .nm{display:flex;align-items:center;gap:1.2rem;font-size:3rem;font-weight:800;letter-spacing:-.01em}
+.eco-card .nm .iso-nt{height:3.4rem;width:auto}
+.eco-card .nm .mono{display:inline-grid;place-items:center;width:3.4rem;height:3.4rem;border-radius:.6rem;background:var(--green);color:var(--on-green);font-size:1.6rem;font-weight:800}
+.eco-card .tag-line{font:800 1.2rem/1.6rem var(--serif);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.eco-card p{font-size:1.9rem;line-height:1.5}
+.eco-card .go{margin-top:auto;align-self:flex-start;border:1px solid #000;border-radius:var(--r-pill);padding:1rem 2.2rem;font-size:1.7rem;white-space:nowrap}
+.eco-card:hover .go{background:var(--ink);color:var(--white)}
+.badge a{color:inherit;text-decoration:none}
+.badge a:hover span{background:var(--ink);color:var(--white)}
+.badge a:hover .iso path{fill:var(--white)}
+.ftr .nt{color:inherit;text-decoration:none}
+.ftr .nt:hover b{text-decoration:underline;text-underline-offset:.3rem}
+@media (max-width:760px){.eco{padding:5.6rem 0 1rem}.eco-card{padding:2.4rem}.eco-card .nm{font-size:2.6rem}.eco-grid{grid-template-columns:1fr}}
+@media print{.eco{display:none}}
+
+/* chamada do ecossistema no topo */
+.promo{box-shadow:inset 0 1px rgba(0,0,0,.1),inset 0 -1px rgba(0,0,0,.1);background:rgba(215,215,215,.45)}
+.promo .wrap{display:flex;align-items:stretch;gap:0}
+.promo .lead-in{display:flex;align-items:center;padding:2.4rem 3.2rem 2.4rem 0;font:800 1.2rem/1.6rem var(--serif);letter-spacing:.08em;text-transform:uppercase;color:var(--green);white-space:nowrap}
+.promo a{flex:1 1 0;display:flex;align-items:center;gap:1.6rem;padding:2.4rem 3.2rem;text-decoration:none;color:var(--ink);box-shadow:inset 1px 0 rgba(0,0,0,.1);transition:background .25s ease}
+.promo a:hover{background:rgba(0,0,0,.05)}
+.promo .iso-nt{height:3.2rem;width:3.2rem;flex:none}
+.promo .mono{display:inline-grid;place-items:center;flex:none;width:3.2rem;height:3.2rem;border-radius:.6rem;background:var(--green);color:var(--on-green);font-size:1.5rem;font-weight:800}
+.promo strong{display:block;font-size:2.1rem;font-weight:800;letter-spacing:-.01em}
+.promo small{display:block;font-size:1.6rem;line-height:1.4;color:var(--caption)}
+.promo .arw{margin-left:auto;font-size:2rem;transition:transform .25s ease}
+.promo a:hover .arw{transform:translate(.3rem,-.3rem)}
+@media (max-width:900px){.promo .lead-in{display:none}.promo a:first-of-type{box-shadow:none}}
+@media (max-width:760px){.promo .lead-in{display:flex;padding:2rem 2rem .4rem}.promo .wrap{flex-direction:column;padding:0}.promo a{padding:1.6rem 2rem;box-shadow:inset 0 1px rgba(0,0,0,.1)}.promo a:first-of-type{box-shadow:none}.promo strong{font-size:1.9rem}.promo small{font-size:1.5rem}}
+@media print{.promo{display:none}}
+.promo .na{height:3.4rem;width:3.4rem;flex:none}
+.eco-card .nm .na{height:3.8rem;width:3.8rem}
 </style>
 </head>
 <body>
@@ -311,7 +351,7 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
 <main id="topo">
   <section class="hero" aria-labelledby="hero-t">
     <div class="wrap">
-      <div class="badge"><span><svg class="iso" viewBox="0 0 236 301" aria-hidden="true"><path d="M135.752 281.308C135.752 288.259 128.125 292.512 122.211 288.86L14.2119 222.155C11.5938 220.538 10.0001 217.68 10 214.603L10 18.891C10 11.9064 17.6933 7.65799 23.6045 11.3783L91.049 53.8293C95.0446 56.3442 100.245 53.4726 100.245 48.7514L100.245 18.891C100.245 11.9064 107.938 7.658 113.85 11.3783L221.849 79.3549C224.43 80.9798 225.997 83.8161 225.997 86.8666L225.997 281.308C225.997 288.259 218.37 292.512 212.456 288.86L144.905 247.138C140.908 244.669 135.752 247.544 135.752 252.243L135.752 281.308Z" fill="#28352C"/></svg>Uma plataforma <b>Neurotestes</b></span></div>
+      <div class="badge"><a href="https://www.neurotestapp.com.br/" target="_blank" rel="noopener" aria-label="Uma plataforma Neurotestes (abre o site do Neurotestes)"><span><svg class="iso" viewBox="0 0 236 301" aria-hidden="true"><path d="M135.752 281.308C135.752 288.259 128.125 292.512 122.211 288.86L14.2119 222.155C11.5938 220.538 10.0001 217.68 10 214.603L10 18.891C10 11.9064 17.6933 7.65799 23.6045 11.3783L91.049 53.8293C95.0446 56.3442 100.245 53.4726 100.245 48.7514L100.245 18.891C100.245 11.9064 107.938 7.658 113.85 11.3783L221.849 79.3549C224.43 80.9798 225.997 83.8161 225.997 86.8666L225.997 281.308C225.997 288.259 218.37 292.512 212.456 288.86L144.905 247.138C140.908 244.669 135.752 247.544 135.752 252.243L135.752 281.308Z" fill="#28352C"/></svg>Uma plataforma <b>Neurotestes</b></span></a></div>
       <p class="hero__kicker"><span id="k-n">115</span> testes psicológicos e neuropsicológicos, com o que observar e <em>o artigo que embasa</em></p>
       <h1 class="hero__title" id="hero-t" aria-label="Avaliar com evidência"><span class="ln" aria-hidden="true"><span class="w">Avaliar com</span></span><span class="ln" aria-hidden="true"><span class="w" id="rot">evidência</span></span></h1>
       <p class="hero__byline"><em>organizado por transtorno,</em> <b>com dados de aplicação, fichas e montagem de bateria</b></p>
@@ -324,6 +364,14 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
     <span class="coord" style="top:40%;right:3%;--tilt:-8deg;--i:4">RAVLT</span>
     <span class="coord" style="bottom:16%;left:22%;--tilt:3deg;--i:5">M-CHAT</span>
     <span class="coord" style="top:5%;left:70%;--tilt:6deg;--i:6">Stroop</span>
+  </section>
+
+  <section class="promo" aria-label="Plataformas do ecossistema Neurotestes">
+    <div class="wrap">
+      <span class="lead-in">Conheça também</span>
+      <a href="https://www.neurotestapp.com.br/" target="_blank" rel="noopener"><svg class="iso-nt" viewBox="0 0 236 301" aria-hidden="true"><path d="M135.752 281.308C135.752 288.259 128.125 292.512 122.211 288.86L14.2119 222.155C11.5938 220.538 10.0001 217.68 10 214.603L10 18.891C10 11.9064 17.6933 7.65799 23.6045 11.3783L91.049 53.8293C95.0446 56.3442 100.245 53.4726 100.245 48.7514L100.245 18.891C100.245 11.9064 107.938 7.658 113.85 11.3783L221.849 79.3549C224.43 80.9798 225.997 83.8161 225.997 86.8666L225.997 281.308C225.997 288.259 218.37 292.512 212.456 288.86L144.905 247.138C140.908 244.669 135.752 247.544 135.752 252.243L135.752 281.308Z" fill="#28352C"/></svg><span><strong>Neurotestes</strong><small>Agenda, pacientes, prontuários e correções automatizadas em um só lugar</small></span><span class="arw" aria-hidden="true">↗</span></a>
+      <a href="https://www.neuroacervo.com.br/" target="_blank" rel="noopener"><svg class="na" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="15" width="10" height="27" rx="1.6" fill="#00846a"/><rect x="17" y="8" width="10" height="34" rx="1.6" fill="#00624f"/><rect x="31.5" y="12" width="10" height="30" rx="1.6" fill="#00846a" transform="rotate(14 31.5 42)"/><path d="M5 22h10M17 15h10M17 32h10" stroke="#e9e9e9" stroke-width="2"/><path d="M31.5 19h10" stroke="#e9e9e9" stroke-width="2" transform="rotate(14 31.5 42)"/><circle cx="10" cy="33" r="2.3" fill="#e9e9e9"/><circle cx="22" cy="23.5" r="2.3" fill="#e9e9e9"/><path d="M3 43.5h42" stroke="#28352C" stroke-width="2.4" stroke-linecap="round"/></svg><span><strong>NeuroAcervo</strong><small>Guias de aplicação e interpretação, modelos de laudo, anamnese e aulas</small></span><span class="arw" aria-hidden="true">↗</span></a>
+    </div>
   </section>
 
   <section class="stats">
@@ -441,9 +489,30 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
   </section>
 </main>
 
+<section class="eco" aria-labelledby="eco-h">
+  <div class="wrap">
+    <p class="eyebrow">Do mesmo ecossistema</p>
+    <h2 id="eco-h">Conheça também</h2>
+    <div class="eco-grid">
+      <a class="eco-card" href="https://www.neurotestapp.com.br/" target="_blank" rel="noopener">
+        <span class="nm"><svg class="iso-nt" viewBox="0 0 236 301" aria-hidden="true"><path d="M135.752 281.308C135.752 288.259 128.125 292.512 122.211 288.86L14.2119 222.155C11.5938 220.538 10.0001 217.68 10 214.603L10 18.891C10 11.9064 17.6933 7.65799 23.6045 11.3783L91.049 53.8293C95.0446 56.3442 100.245 53.4726 100.245 48.7514L100.245 18.891C100.245 11.9064 107.938 7.658 113.85 11.3783L221.849 79.3549C224.43 80.9798 225.997 83.8161 225.997 86.8666L225.997 281.308C225.997 288.259 218.37 292.512 212.456 288.86L144.905 247.138C140.908 244.669 135.752 247.544 135.752 252.243L135.752 281.308Z" fill="#28352C"/></svg>Neurotestes</span>
+        <span class="tag-line">Gestão do consultório</span>
+        <p>Gerencie agenda, pacientes e prontuários com facilidade, além de correções automatizadas. Tudo integrado em um só lugar.</p>
+        <span class="go">Acessar o Neurotestes ↗</span>
+      </a>
+      <a class="eco-card" href="https://www.neuroacervo.com.br/" target="_blank" rel="noopener">
+        <span class="nm"><svg class="na" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="15" width="10" height="27" rx="1.6" fill="#00846a"/><rect x="17" y="8" width="10" height="34" rx="1.6" fill="#00624f"/><rect x="31.5" y="12" width="10" height="30" rx="1.6" fill="#00846a" transform="rotate(14 31.5 42)"/><path d="M5 22h10M17 15h10M17 32h10" stroke="#e9e9e9" stroke-width="2"/><path d="M31.5 19h10" stroke="#e9e9e9" stroke-width="2" transform="rotate(14 31.5 42)"/><circle cx="10" cy="33" r="2.3" fill="#e9e9e9"/><circle cx="22" cy="23.5" r="2.3" fill="#e9e9e9"/><path d="M3 43.5h42" stroke="#28352C" stroke-width="2.4" stroke-linecap="round"/></svg>NeuroAcervo</span>
+        <span class="tag-line">Material para a rotina clínica</span>
+        <p>Guias rápidos de aplicação e interpretação, modelos de laudo, roteiros de anamnese, compêndios de estudo, aulas e prontuário do paciente com dossiê clínico, organizados e prontos para consulta.</p>
+        <span class="go">Acessar o NeuroAcervo ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <footer class="ftr">
   <div class="wrap">
-    <div class="brand"><svg class="iso nm" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 11.5 17 7v30L5 41.5z" fill="#00846a"/><path d="M17 7l14 4.5v30L17 37z" fill="#00624f"/><path d="M31 11.5 43 7v30l-12 4.5z" fill="#00846a"/><path d="M11 31.5 23.5 19.5 36 26" fill="none" stroke="#e9e9e9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="31.5" r="3.2" fill="#e9e9e9"/><circle cx="23.5" cy="19.5" r="3.2" fill="#e9e9e9"/><circle cx="36" cy="26" r="3.2" fill="#e9e9e9"/></svg><p><b>Neuro<span style="color:var(--green)">Mapa</span></b> é uma plataforma criada e administrada pelo <span class="nt"><svg class="iso-nt" viewBox="0 0 236 301" aria-hidden="true"><path d="M135.752 281.308C135.752 288.259 128.125 292.512 122.211 288.86L14.2119 222.155C11.5938 220.538 10.0001 217.68 10 214.603L10 18.891C10 11.9064 17.6933 7.65799 23.6045 11.3783L91.049 53.8293C95.0446 56.3442 100.245 53.4726 100.245 48.7514L100.245 18.891C100.245 11.9064 107.938 7.658 113.85 11.3783L221.849 79.3549C224.43 80.9798 225.997 83.8161 225.997 86.8666L225.997 281.308C225.997 288.259 218.37 292.512 212.456 288.86L144.905 247.138C140.908 244.669 135.752 247.544 135.752 252.243L135.752 281.308Z" fill="#28352C"/></svg><b>Neurotestes</b></span>.</p></div>
+    <div class="brand"><svg class="iso nm" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 11.5 17 7v30L5 41.5z" fill="#00846a"/><path d="M17 7l14 4.5v30L17 37z" fill="#00624f"/><path d="M31 11.5 43 7v30l-12 4.5z" fill="#00846a"/><path d="M11 31.5 23.5 19.5 36 26" fill="none" stroke="#e9e9e9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="31.5" r="3.2" fill="#e9e9e9"/><circle cx="23.5" cy="19.5" r="3.2" fill="#e9e9e9"/><circle cx="36" cy="26" r="3.2" fill="#e9e9e9"/></svg><p><b>Neuro<span style="color:var(--green)">Mapa</span></b> é uma plataforma criada e administrada pelo <a class="nt" href="https://www.neurotestapp.com.br/" target="_blank" rel="noopener"><svg class="iso-nt" viewBox="0 0 236 301" aria-hidden="true"><path d="M135.752 281.308C135.752 288.259 128.125 292.512 122.211 288.86L14.2119 222.155C11.5938 220.538 10.0001 217.68 10 214.603L10 18.891C10 11.9064 17.6933 7.65799 23.6045 11.3783L91.049 53.8293C95.0446 56.3442 100.245 53.4726 100.245 48.7514L100.245 18.891C100.245 11.9064 107.938 7.658 113.85 11.3783L221.849 79.3549C224.43 80.9798 225.997 83.8161 225.997 86.8666L225.997 281.308C225.997 288.259 218.37 292.512 212.456 288.86L144.905 247.138C140.908 244.669 135.752 247.544 135.752 252.243L135.752 281.308Z" fill="#28352C"/></svg><b>Neurotestes</b></a>.</p></div>
     <p>Material de referência clínica, revisado em <span id="rev2"></span>. As faixas etárias e os tempos são aproximados e não substituem os manuais dos testes.</p>
     <span class="sign">bons atendimentos</span>
   </div>
