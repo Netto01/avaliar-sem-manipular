@@ -248,6 +248,12 @@ section{position:relative}
 .tag--ind{background:var(--paper-dark)}
 .tag--both{background:var(--ink);color:var(--paper);box-shadow:none}
 .tag--man{background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink-faint);border:0;outline:1px dashed transparent}
+.sat{display:inline-flex;align-items:center;gap:6px;margin:10px 4px 0 0;padding:3px 9px 3px 7px;border-radius:999px;font:600 9.5px/1.6 var(--sans);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
+.sat i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.sat--fav{background:rgba(0,132,106,.12);color:#00704f;box-shadow:inset 0 0 0 1px rgba(0,132,106,.35)}
+.sat--des{background:rgba(196,46,30,.1);color:#b3271a;box-shadow:inset 0 0 0 1px rgba(196,46,30,.35)}
+.sat--np{background:rgba(233,185,74,.18);color:#8a6510;box-shadow:inset 0 0 0 1px rgba(233,185,74,.55)}
+.dlg h3+.sat{margin-top:0}
 .tag--u{background:rgba(237,111,92,.12);box-shadow:inset 0 0 0 1px rgba(237,111,92,.35);color:var(--coral)}
 .empty{padding:48px 24px;text-align:center;font:italic 500 20px/1.3 var(--serif);color:var(--ink-mute)}
 .ibtn{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;letter-spacing:inherit;border-bottom:1px solid transparent;transition:color .16s ease,border-color .16s ease}
@@ -773,8 +779,10 @@ body:has(dialog[open]) .cbar{display:none}
   function nameBtn(n,label){return '<button class="ibtn" data-ficha="'+esc(n)+'">'+esc(label||n)+'</button>'}
   function catRef(n){return CR[n==="MINI / MINI-Kid"?"MINI":n]}
   var SATL={favoravel:"Favorável",desfavoravel:"Desfavorável",nao_privativo:"Instrumento não privativo",nao_encontrado:"Não localizado na consulta automática",nao_listado:"Não consta no SATEPSI"};
+  function satBadge(n){var S=window.SATEPSI;if(!S)return "";var i=(S.instrumentos||{})[n==="MINI / MINI-Kid"?"MINI":n];if(!i)return "";var c={favoravel:["fav","Favorável"],desfavoravel:["des","Desfavorável"],nao_privativo:["np","Não privativo"]}[i.status];if(!c)return "";var d=String(S.verificado_em||"").split("-").reverse().join("/");return '<span class="sat sat--'+c[0]+'" title="SATEPSI'+(i.nome_satepsi?": "+esc(i.nome_satepsi):"")+(i.nota?" · "+esc(i.nota):"")+' · conferido em '+d+'"><i aria-hidden="true"></i>SATEPSI · '+c[1]+'</span>'}
   function satTxt(n){var S=window.SATEPSI;if(!S)return "Consulte em satepsi.cfp.org.br";var k=n==="MINI / MINI-Kid"?"MINI":n,i=(S.instrumentos||{})[k];if(!i)return "Consulte em satepsi.cfp.org.br";var d=String(S.verificado_em||"").split("-").reverse().join("/");return (SATL[i.status]||i.status)+(i.nome_satepsi?" · "+i.nome_satepsi:"")+" (conferido em "+d+"; confirme antes do uso)"}
-  if(window.fetch&&location.protocol.indexOf("http")===0){fetch("satepsi.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).then(function(j){if(!j)return;window.SATEPSI=j;var e=document.getElementById("st-sat");if(e){e.textContent="SATEPSI conferido em "+String(j.verificado_em).split("-").reverse().join("/");e.hidden=false}}).catch(function(){})}
+  if(window.SATEPSI){setTimeout(function(){var e=document.getElementById("st-sat");if(e){e.textContent="SATEPSI conferido em "+String(window.SATEPSI.verificado_em).split("-").reverse().join("/");e.hidden=false}},0)}
+  else if(window.fetch&&location.protocol.indexOf("http")===0){fetch("satepsi.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).then(function(j){if(!j)return;window.SATEPSI=j;try{renderT();renderB();renderC()}catch(_){};var e=document.getElementById("st-sat");if(e){e.textContent="SATEPSI conferido em "+String(j.verificado_em).split("-").reverse().join("/");e.hidden=false}}).catch(function(){})}
 
   // idade: devolve [min,max] em anos a partir do texto da faixa
   var WORDS=[["primeira infancia",0,5],["pre-escola",4,6],["idade escolar",6,14],["criancas",3,11],["adolescentes",12,17],["adultos",18,59],["idosos",60,99],["cuidadores",0,99],["pais",0,99],["todas",0,99],["ver manual",0,99]];
@@ -830,7 +838,7 @@ body:has(dialog[open]) .cbar{display:none}
     set("t-count",rows.length+(rows.length===1?" instrumento":" instrumentos"));
     document.getElementById("t-body").innerHTML=rows.length?rows.map(function(t){
       var i=byName[t[1]],m=M[t[1]]||[];
-      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(t[1])+'<span class="meta">'+esc(i[1])+(m[2]?' · '+esc(m[2]):'')+'</span>'+tag(i[2])+((M[t[1]]||[])[0]==='U'?'<span class="tag tag--u">Não padronizado</span>':'')+(i[7]?'<span class="tag tag--man">Exige manipulação</span>':'')+'</td><td class="obs" data-l="O que observar">'+esc(t[2])+'</td><td class="ref" data-l="Referência">'+refHtml(t[3])+'</td></tr>'
+      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(t[1])+'<span class="meta">'+esc(i[1])+(m[2]?' · '+esc(m[2]):'')+'</span>'+satBadge(t[1])+tag(i[2])+((M[t[1]]||[])[0]==='U'?'<span class="tag tag--u">Não padronizado</span>':'')+(i[7]?'<span class="tag tag--man">Exige manipulação</span>':'')+'</td><td class="obs" data-l="O que observar">'+esc(t[2])+'</td><td class="ref" data-l="Referência">'+refHtml(t[3])+'</td></tr>'
     }).join(""):'<tr><td class="empty" colspan="3">Nenhum instrumento com esse filtro.</td></tr>';
   }
   document.getElementById("t-csv").onclick=function(){csv("indicadores-"+slug(cur)+".csv",["Condição","Instrumento","Faixa etária","Aplicação","O que observar","Referência","Nível de evidência"],rowsT().map(function(t){var i=byName[t[1]];return [t[0],t[1],i[1],i[2],t[2],refText(t[3]),EV[t[3]]?EVL[EV[t[3]]]:""]}))};
@@ -859,7 +867,7 @@ body:has(dialog[open]) .cbar{display:none}
     set("b-count",rows.length?rows.length+(rows.length===1?" instrumento sugerido":" instrumentos sugeridos"):"Nenhum instrumento para essa combinação");
     document.getElementById("b-body").innerHTML=rows.length?rows.map(function(t){
       var i=byName[t[1]],m=M[t[1]]||[];
-      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(t[1])+'<span class="meta">'+esc(i[1])+'</span>'+tag(i[2])+'</td><td class="obs" data-l="Por que incluir">'+esc(t[2])+'</td><td data-l="Aplicação">'+esc(m[2]||"")+'<span class="meta">'+esc(m[3]||"")+(m[0]?' · '+esc(TIPO[m[0]]):'')+'</span></td><td class="ref" data-l="Referência">'+refHtml(t[3])+'</td></tr>'
+      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(t[1])+'<span class="meta">'+esc(i[1])+'</span>'+satBadge(t[1])+tag(i[2])+'</td><td class="obs" data-l="Por que incluir">'+esc(t[2])+'</td><td data-l="Aplicação">'+esc(m[2]||"")+'<span class="meta">'+esc(m[3]||"")+(m[0]?' · '+esc(TIPO[m[0]]):'')+'</span></td><td class="ref" data-l="Referência">'+refHtml(t[3])+'</td></tr>'
     }).join(""):'<tr><td class="empty" colspan="4">Tente outra faixa etária, inclua informantes ou permita manipulação.</td></tr>';
   }
   document.getElementById("b-csv").onclick=function(){csv("bateria-"+slug(bc.value)+".csv",["Instrumento","Faixa etária","Aplicação","Por que incluir","Tempo","Formato","Tipo no SATEPSI (provável)","Referência","Nível de evidência"],rowsB().map(function(t){var i=byName[t[1]],m=M[t[1]]||[];return [t[1],i[1],i[2],t[2],m[2],m[3],TIPO[m[0]],refText(t[3]),EV[t[3]]?EVL[EV[t[3]]]:""]}))};
@@ -878,7 +886,7 @@ body:has(dialog[open]) .cbar{display:none}
     set("c-count",rows.length+(rows.length===1?" instrumento":" instrumentos"));
     document.getElementById("c-body").innerHTML=rows.length?rows.map(function(r){
       var m=M[r[0]]||[],on=picked.indexOf(r[0])>=0;
-      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(r[0])+'<span class="meta">'+esc(r[5])+'</span>'+tag(r[2])+((M[r[0]]||[])[0]==='U'?'<span class="tag tag--u">Não padronizado</span>':'')+(r[7]?'<span class="tag tag--man">Exige manipulação</span>':'')+'<button class="cmp" aria-pressed="'+on+'" data-cmp="'+esc(r[0])+'">'+(on?'✓ comparando':'+ comparar')+'</button></td><td data-l="Faixa etária">'+esc(r[1])+'</td><td data-l="Aplicação">'+esc(r[3])+'<span class="meta">'+esc(m[2]||"")+'</span></td><td data-l="Função avaliada">'+esc(r[4])+'</td><td data-l="Contextos">'+esc(r[6])+'</td><td class="ref" data-l="Referência">'+refHtml(catRef(r[0]))+'</td></tr>'
+      return '<tr><td class="inst" data-l="Instrumento">'+nameBtn(r[0])+'<span class="meta">'+esc(r[5])+'</span>'+satBadge(r[0])+tag(r[2])+((M[r[0]]||[])[0]==='U'?'<span class="tag tag--u">Não padronizado</span>':'')+(r[7]?'<span class="tag tag--man">Exige manipulação</span>':'')+'<button class="cmp" aria-pressed="'+on+'" data-cmp="'+esc(r[0])+'">'+(on?'✓ comparando':'+ comparar')+'</button></td><td data-l="Faixa etária">'+esc(r[1])+'</td><td data-l="Aplicação">'+esc(r[3])+'<span class="meta">'+esc(m[2]||"")+'</span></td><td data-l="Função avaliada">'+esc(r[4])+'</td><td data-l="Contextos">'+esc(r[6])+'</td><td class="ref" data-l="Referência">'+refHtml(catRef(r[0]))+'</td></tr>'
     }).join(""):'<tr><td class="empty" colspan="6">Nenhum instrumento com esse filtro.</td></tr>';
   }
   document.getElementById("c-csv").onclick=function(){csv("catalogo-instrumentos.csv",["Instrumento","Faixa etária","Aplicação","Como responde","Função avaliada","Forma de resposta","Contextos","Exige manipulação","Tipo no SATEPSI (provável)","Acesso","Tempo","Formato","Leitura","Ponto de corte","Referência","Nível de evidência"],rowsC().map(function(r){var m=M[r[0]]||[],k=catRef(r[0]);return [r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7]?"Sim":"Não",TIPO[m[0]],AC[m[1]],m[2],m[3],m[4],m[5],refText(k),EV[k]?EVL[EV[k]]:""]}))};
@@ -908,7 +916,7 @@ body:has(dialog[open]) .cbar{display:none}
     var m=M[n]||[],key=n==="MINI / MINI-Kid"?"MINI":n,k=catRef(n);
     var ind=T.filter(function(t){return t[1]===key||(n==="MINI / MINI-Kid"&&t[1]==="MINI-Kid")});
     var kv=[["Faixa etária",r[1]],["Aplicação",r[2]],["Como responde",r[3]],["Função avaliada",r[4]],["Forma de resposta",r[5]],["Exige manipulação",r[7]?"Sim":"Não"],["Tempo aproximado",m[2]],["Formato",m[3]],["Leitura",m[4]],["Ponto de corte",m[5]||"Ver manual da edição em uso"],["Tipo no SATEPSI",(TIPO[m[0]]||"")+" (provável; conferir)"],["Situação no SATEPSI",satTxt(n)],["Acesso",AC[m[1]]],["Contextos mais comuns",r[6]]];
-    var h='<button class="x" data-close>Fechar</button><p class="eyebrow">Ficha do instrumento</p><h3>'+esc(n)+'</h3>'+tag(r[2])+(r[7]?'<span class="tag tag--man">Exige manipulação</span>':'')
+    var h='<button class="x" data-close>Fechar</button><p class="eyebrow">Ficha do instrumento</p><h3>'+esc(n)+'</h3>'+satBadge(n)+tag(r[2])+(r[7]?'<span class="tag tag--man">Exige manipulação</span>':'')
       +'<dl class="kv">'+kv.map(function(x){return '<dt>'+x[0]+'</dt><dd>'+esc(x[1]||"—")+'</dd>'}).join("")+'</dl>'
       +'<h4>Referência do instrumento</h4><p class="ref" style="font-size:1.7rem;line-height:1.5">'+refHtml(k)+'</p>'
       +'<h4>O que observar, por condição ('+ind.length+')</h4><ul>'+(ind.length?ind.map(function(t){return '<li><b>'+esc(t[0])+'.</b> '+esc(t[2])+'<br><span class="small">'+(t[3]?refHtml(t[3]):'Sem artigo indexado para este indicador')+'</span></li>'}).join(""):'<li>Ainda sem indicadores por condição no guia.</li>')+'</ul>'
