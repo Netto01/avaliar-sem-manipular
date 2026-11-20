@@ -19,4 +19,4 @@ Revisado em 18 de novembro de 2026.
 
 ## Design
 
-Visual baseado no design system Hanzo: fontes Inter Display e Instrument Serif (SIL OFL 1.1, ver `fonts/OFL-fontes.txt`).
+Visual baseado no design system Open Design: fontes Inter, Inter Tight, Playfair Display e JetBrains Mono (SIL OFL 1.1, ver `fonts/OFL-fontes.txt`). As figuras foram desenhadas em SVG para o projeto.
