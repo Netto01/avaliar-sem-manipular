@@ -150,7 +150,11 @@ def scrape():
                 form.update({"buscaTextual": "", "texto": ""})
             try:
                 resp = page.request.post(url, form=form, timeout=90_000)
-                html = resp.text()
+                raw = resp.body()
+                try:
+                    html = raw.decode("utf-8")
+                except UnicodeDecodeError:
+                    html = raw.decode("cp1252", errors="replace")
             except Exception as e:
                 print(f"[aviso] falha ao enviar a busca: {e}")
                 return False
@@ -222,8 +226,7 @@ def scrape():
             snapshot(status)
             pages_seen.append({"status": status, "url": page.url, "linhas": n})
             print(f"{status}: {n} linhas em {page.url}")
-            if n:
-                done.add(status)
+            done.add(status)
         page.goto(START, wait_until="networkidle", timeout=90_000)
         # reserva: descobre abas ou links de cada lista
         for status, words in TABS.items():
