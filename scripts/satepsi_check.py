@@ -59,7 +59,8 @@ def acronyms(name):
                 out.add(norm(part).replace(" ", ""))
             if len(letters) >= 2 and sum(c.isupper() for c in letters) >= max(2, len(letters) - 1):
                 out.add(norm(part).replace(" ", ""))
-    return {a for a in out if len(a) >= 2}
+    roman = {"i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x", "xi", "xii"}
+    return {a for a in out if len(a) >= 2 and a not in roman}
 
 
 def load_neuromapa():
