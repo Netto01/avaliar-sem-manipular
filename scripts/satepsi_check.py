@@ -120,8 +120,48 @@ def scrape():
                         records.append(rec); got += 1
             return got
 
+        def read_accordion(status):
+            got = 0
+            items = page.query_selector_all("#accordionTestes .accordion-item, #accordionTestes > div, .accordion-item")
+            seen_items = set()
+            for it in items:
+                h = it.query_selector("a, button, h3, h4, h5, .card-header")
+                name = re.sub(r"\s+", " ", (h.text_content() if h else "") or "").strip()
+                if not name or name in seen_items:
+                    continue
+                seen_items.add(name)
+                raw = re.sub(r"\s+", " ", it.text_content() or "").strip()
+                det = raw[len(name):].strip() if raw.startswith(name) else raw
+                campos = {}
+                for m in re.finditer(r"([A-ZÀ-Úa-zà-ú][A-Za-zÀ-ú ()/º°.]{2,60}?):\s*(.*?)(?=\s[A-ZÀ-Ú][A-Za-zÀ-ú ()/º°.]{2,60}?:\s|$)", det):
+                    k, v = m.group(1).strip(), m.group(2).strip()
+                    if v and len(campos) < 30:
+                        campos[k] = v[:400]
+                rec = {"status": status, "nome": name, "celulas": [det[:1500]]}
+                if campos:
+                    rec["campos"] = campos
+                records.append(rec); got += 1
+            return got
+
+        def submit_search():
+            btn = page.query_selector("form[action*='testes'] #btsalvar, form[action*='testes'] button[type=submit], #btsalvar")
+            if not btn:
+                return False
+            try:
+                with page.expect_navigation(wait_until="networkidle", timeout=90_000):
+                    btn.click()
+            except Exception:
+                try:
+                    page.evaluate("() => { const f=[...document.forms].find(f => /testes/i.test(f.getAttribute('action')||'')); if (f) f.submit(); }")
+                    page.wait_for_load_state("networkidle", timeout=90_000)
+                except Exception as e:
+                    print(f"[aviso] falha ao enviar a busca: {e}")
+                    return False
+            page.wait_for_timeout(1500)
+            return True
+
         def read_all_pages(status):
-            total = read_tables(status)
+            total = read_tables(status) + read_accordion(status)
             for _ in range(80):
                 nxt = None
                 cands = page.query_selector_all(".paginate_button.next, li.next a, .page-item.next a, a[rel=next], [class*=pag] a, [class*=pag] button")
@@ -141,7 +181,7 @@ def scrape():
                     break
                 if page.content() == before:
                     break
-                total += read_tables(status)
+                total += read_tables(status) + read_accordion(status)
             return total
 
         def close_modals():
@@ -165,7 +205,10 @@ def scrape():
             except Exception as e:
                 print(f"[aviso] {path} indisponível ({e}); vou procurar pelo menu")
                 continue
-            close_modals(); show_all()
+            close_modals()
+            if submit_search():
+                close_modals()
+            show_all()
             n = read_all_pages(status)
             snapshot(status)
             pages_seen.append({"status": status, "url": page.url, "linhas": n})
