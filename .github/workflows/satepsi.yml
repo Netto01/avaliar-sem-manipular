@@ -45,8 +45,21 @@ jobs:
           path: debug/
           retention-days: 14
 
-      - name: Abrir pedido de alteração para revisão
-        if: steps.check.outputs.changed == 'true'
+      - name: Publicar a atualização no site
+        if: steps.check.outputs.changed == 'true' && steps.check.outputs.auto == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add satepsi.json
+          git commit -F - <<MSG
+          SATEPSI: atualização automática da verificação semanal
+
+          $(cat debug/pr_body.md)
+          MSG
+          git push
+
+      - name: Abrir pedido de alteração para revisão (leitura fora do normal)
+        if: steps.check.outputs.changed == 'true' && steps.check.outputs.auto != 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           branch: satepsi/atualizacao

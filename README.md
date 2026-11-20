@@ -23,7 +23,7 @@ Visual baseado no design system Open Design: fontes Inter, Inter Tight, Playfair
 
 ## Verificação automática do SATEPSI
 
-Toda segunda-feira o fluxo `.github/workflows/satepsi.yml` abre o site do SATEPSI, lê as listas de testes favoráveis, desfavoráveis e não privativos e compara com o guia (`scripts/satepsi_check.py`). Se houver mudança, ele abre um pedido de alteração com o resumo; o site só muda depois da aprovação. A situação de cada instrumento aparece na ficha, com a data da conferência.
+Toda segunda-feira o fluxo `.github/workflows/satepsi.yml` abre o site do SATEPSI, lê as listas de testes favoráveis, desfavoráveis e não privativos e compara com o guia (`scripts/satepsi_check.py`). Se houver mudança, ele publica o novo `satepsi.json` direto no site, com o resumo na mensagem do commit. Se a leitura parecer fora do normal (queda de mais de 20% nos favoráveis ou mais de 15 mudanças de uma vez), ele abre um pedido de alteração para revisão em vez de publicar. A situação de cada instrumento aparece na ficha, com a data da conferência.
 
 - Rodar agora: aba **Actions** → *Verificação semanal do SATEPSI* → **Run workflow**.
 - Corrigir uma correspondência de nomes: edite `scripts/satepsi-map.json` (nome no NeuroMapa → nome exato no SATEPSI, ou `null`).

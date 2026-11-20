@@ -409,6 +409,18 @@ def summarize(new, old):
                      "edite `scripts/satepsi-map.json` (nome no NeuroMapa → nome exato no SATEPSI, ou `null` se não estiver no SATEPSI).\n")
     lines.append("---\nGerado automaticamente pelo fluxo semanal `.github/workflows/satepsi.yml`. "
                  "Nada muda no site até este pedido ser aprovado.")
+    # publicação automática só quando a leitura parece normal
+    auto = True
+    motivo = ""
+    if old:
+        fav_old = old.get("contagens", {}).get("favoravel", 0)
+        if fav_old and c.get("favoravel", 0) < fav_old * 0.8:
+            auto, motivo = False, f"o número de favoráveis caiu de {fav_old} para {c.get('favoravel', 0)}"
+        elif len(changes) > 15:
+            auto, motivo = False, f"{len(changes)} instrumentos mudaram de situação de uma vez"
+    if not auto:
+        lines.insert(1, f"> **Publicação automática suspensa:** {motivo}. Confira antes de aprovar.\n")
+    summarize.auto = auto
     return "\n".join(lines), bool(changes or novos or not old)
 
 
@@ -444,6 +456,7 @@ def main():
     if gh:
         with open(gh, "a") as f:
             f.write(f"changed={'true' if changed else 'false'}\n")
+            f.write(f"auto={'true' if getattr(summarize, 'auto', True) else 'false'}\n")
 
 
 if __name__ == "__main__":
