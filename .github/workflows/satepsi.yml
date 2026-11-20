@@ -1,0 +1,58 @@
+name: Verificação semanal do SATEPSI
+
+on:
+  schedule:
+    - cron: "17 11 * * 1"   # segundas, 08:17 em Brasília
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: satepsi
+  cancel-in-progress: false
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar o navegador
+        run: |
+          pip install playwright==1.48.0
+          python -m playwright install --with-deps chromium
+
+      - name: Ler o SATEPSI e comparar com o guia
+        id: check
+        run: python scripts/satepsi_check.py
+
+      - name: Guardar arquivos de diagnóstico
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: satepsi-debug
+          path: debug/
+          retention-days: 14
+
+      - name: Abrir pedido de alteração para revisão
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: satepsi/atualizacao
+          delete-branch: true
+          add-paths: satepsi.json
+          commit-message: "SATEPSI: atualização automática da verificação semanal"
+          title: "SATEPSI: mudanças encontradas na verificação semanal"
+          body-path: debug/pr_body.md
+          labels: satepsi

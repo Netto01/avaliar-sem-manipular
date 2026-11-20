@@ -20,3 +20,11 @@ Revisado em 18 de novembro de 2026.
 ## Design
 
 Visual baseado no design system Open Design: fontes Inter, Inter Tight, Playfair Display e JetBrains Mono (SIL OFL 1.1, ver `fonts/OFL-fontes.txt`). As figuras foram desenhadas em SVG para o projeto.
+
+## Verificação automática do SATEPSI
+
+Toda segunda-feira o fluxo `.github/workflows/satepsi.yml` abre o site do SATEPSI, lê as listas de testes favoráveis, desfavoráveis e não privativos e compara com o guia (`scripts/satepsi_check.py`). Se houver mudança, ele abre um pedido de alteração com o resumo; o site só muda depois da aprovação. A situação de cada instrumento aparece na ficha, com a data da conferência.
+
+- Rodar agora: aba **Actions** → *Verificação semanal do SATEPSI* → **Run workflow**.
+- Corrigir uma correspondência de nomes: edite `scripts/satepsi-map.json` (nome no NeuroMapa → nome exato no SATEPSI, ou `null`).
+- Se a leitura falhar (por exemplo, mudança no layout do SATEPSI), o GitHub envia um e-mail e os arquivos de diagnóstico ficam no artefato `satepsi-debug` da execução.

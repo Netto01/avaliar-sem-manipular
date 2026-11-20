@@ -48,6 +48,8 @@ button,input,select{font-family:inherit}
 .strip .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;font:500 10.5px/1.3 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
 .strip b{color:var(--ink);font-weight:600}
 .strip .c{color:var(--coral)}
+#st-sat::before{content:"· ";color:var(--ink-faint)}
+#st-sat{color:var(--ink)}
 .strip span{white-space:nowrap}
 .strip .pulse{width:6px;height:6px;border-radius:50%;background:var(--coral);display:inline-block;margin-right:6px;vertical-align:1px;animation:pulse 2.4s ease-in-out infinite}
 .hdr{padding:18px 0;border-bottom:1px solid transparent;transition:border-color .2s ease}
@@ -475,7 +477,7 @@ body:has(dialog[open]) .cbar{display:none}
 <div class="rail l" aria-hidden="true"><span>NeuroMapa · Avaliar com evidência · 2026</span></div>
 <div class="rail r" aria-hidden="true"><span>Neurotestes — NM Nº 01 · SATEPSI · Res. CFP 31/2022</span></div>
 <div class="chrome" id="chrome">
-  <div class="strip"><div class="wrap"><span><b>NM / 2026</b> · Edição Nº 01 · Guia clínico</span><span class="mid"><span id="st-n">139</span> instrumentos · <span class="c">avaliar com evidência</span></span><span class="rt"><i class="pulse" aria-hidden="true"></i>Revisado · <b id="st-rev">19 nov 2026</b></span></div></div>
+  <div class="strip"><div class="wrap"><span><b>NM / 2026</b> · Edição Nº 01 · Guia clínico</span><span class="mid"><span id="st-n">139</span> instrumentos · <span class="c">avaliar com evidência</span> <span id="st-sat" hidden></span></span><span class="rt"><i class="pulse" aria-hidden="true"></i>Revisado · <b id="st-rev">19 nov 2026</b></span></div></div>
   <header class="hdr">
     <div class="wrap">
       <a class="brand" href="#topo" aria-label="NeuroMapa, uma plataforma Neurotestes"><span class="mk"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 11.5 17 7v30L5 41.5z" fill="#00846a"/><path d="M17 7l14 4.5v30L17 37z" fill="#00624f"/><path d="M31 11.5 43 7v30l-12 4.5z" fill="#00846a"/><path d="M11 31.5 23.5 19.5 36 26" fill="none" stroke="#efe7d2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="31.5" r="3.2" fill="#efe7d2"/><circle cx="23.5" cy="19.5" r="3.2" fill="#efe7d2"/><circle cx="36" cy="26" r="3.2" fill="#efe7d2"/></svg></span><span>Neuro<b>Mapa</b></span><span class="meta">Uma plataforma<b>Neurotestes</b></span></a>
@@ -727,7 +729,8 @@ body:has(dialog[open]) .cbar{display:none}
         <p>Os inventários não padronizados (escalas de rastreio de domínio público, como PHQ-9, GAD-7, AUDIT, PCL-5 e Epworth) entraram só quando havia estudo brasileiro de tradução, adaptação ou validação. Quando o estudo brasileiro é apenas uma dissertação, citamos o artigo original e marcamos o nível de evidência como C.</p>
         <p>Cada referência recebe um <b>nível de evidência</b>:</p>
         <div class="levels" id="levels"></div>
-        <p><b>Limites.</b> O site do SATEPSI não pôde ser consultado diretamente; o tipo de cada instrumento é a classificação provável e deve ser conferido antes do uso. Tempos de aplicação são aproximados. Pontos de corte só aparecem quando constam do artigo citado ou do manual de referência.</p>
+        <p><b>SATEPSI.</b> Uma verificação automática semanal lê as listas públicas do SATEPSI, compara com o guia e propõe as mudanças para revisão humana antes de publicar. A situação aparece na ficha de cada instrumento com a data da conferência. A leitura automática pode errar a correspondência de nomes: confirme sempre em satepsi.cfp.org.br antes do uso.</p>
+        <p><b>Limites.</b> O tipo de cada instrumento no guia é a classificação provável e deve ser conferido antes do uso. Tempos de aplicação são aproximados. Pontos de corte só aparecem quando constam do artigo citado ou do manual de referência.</p>
         <p><b>Revisão.</b> Conteúdo revisado em <span id="rev"></span>. Recomenda-se revisão por um segundo neuropsicólogo antes de uso institucional.</p>
       </div>
     </div>
@@ -769,6 +772,9 @@ body:has(dialog[open]) .cbar{display:none}
   function man(n){var r=byName[n];return r&&r[7]?1:0}
   function nameBtn(n,label){return '<button class="ibtn" data-ficha="'+esc(n)+'">'+esc(label||n)+'</button>'}
   function catRef(n){return CR[n==="MINI / MINI-Kid"?"MINI":n]}
+  var SATL={favoravel:"Favorável",desfavoravel:"Desfavorável",nao_privativo:"Instrumento não privativo",nao_encontrado:"Não localizado na consulta automática",nao_listado:"Não consta no SATEPSI"};
+  function satTxt(n){var S=window.SATEPSI;if(!S)return "Consulte em satepsi.cfp.org.br";var k=n==="MINI / MINI-Kid"?"MINI":n,i=(S.instrumentos||{})[k];if(!i)return "Consulte em satepsi.cfp.org.br";var d=String(S.verificado_em||"").split("-").reverse().join("/");return (SATL[i.status]||i.status)+(i.nome_satepsi?" · "+i.nome_satepsi:"")+" (conferido em "+d+"; confirme antes do uso)"}
+  if(window.fetch&&location.protocol.indexOf("http")===0){fetch("satepsi.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).then(function(j){if(!j)return;window.SATEPSI=j;var e=document.getElementById("st-sat");if(e){e.textContent="SATEPSI conferido em "+String(j.verificado_em).split("-").reverse().join("/");e.hidden=false}}).catch(function(){})}
 
   // idade: devolve [min,max] em anos a partir do texto da faixa
   var WORDS=[["primeira infancia",0,5],["pre-escola",4,6],["idade escolar",6,14],["criancas",3,11],["adolescentes",12,17],["adultos",18,59],["idosos",60,99],["cuidadores",0,99],["pais",0,99],["todas",0,99],["ver manual",0,99]];
@@ -901,7 +907,7 @@ body:has(dialog[open]) .cbar{display:none}
     var r=n==="MINI / MINI-Kid"?C.filter(function(x){return x[0]===n})[0]:byName[n];if(!r)return;
     var m=M[n]||[],key=n==="MINI / MINI-Kid"?"MINI":n,k=catRef(n);
     var ind=T.filter(function(t){return t[1]===key||(n==="MINI / MINI-Kid"&&t[1]==="MINI-Kid")});
-    var kv=[["Faixa etária",r[1]],["Aplicação",r[2]],["Como responde",r[3]],["Função avaliada",r[4]],["Forma de resposta",r[5]],["Exige manipulação",r[7]?"Sim":"Não"],["Tempo aproximado",m[2]],["Formato",m[3]],["Leitura",m[4]],["Ponto de corte",m[5]||"Ver manual da edição em uso"],["Tipo no SATEPSI",(TIPO[m[0]]||"")+" (provável; conferir)"],["Acesso",AC[m[1]]],["Contextos mais comuns",r[6]]];
+    var kv=[["Faixa etária",r[1]],["Aplicação",r[2]],["Como responde",r[3]],["Função avaliada",r[4]],["Forma de resposta",r[5]],["Exige manipulação",r[7]?"Sim":"Não"],["Tempo aproximado",m[2]],["Formato",m[3]],["Leitura",m[4]],["Ponto de corte",m[5]||"Ver manual da edição em uso"],["Tipo no SATEPSI",(TIPO[m[0]]||"")+" (provável; conferir)"],["Situação no SATEPSI",satTxt(n)],["Acesso",AC[m[1]]],["Contextos mais comuns",r[6]]];
     var h='<button class="x" data-close>Fechar</button><p class="eyebrow">Ficha do instrumento</p><h3>'+esc(n)+'</h3>'+tag(r[2])+(r[7]?'<span class="tag tag--man">Exige manipulação</span>':'')
       +'<dl class="kv">'+kv.map(function(x){return '<dt>'+x[0]+'</dt><dd>'+esc(x[1]||"—")+'</dd>'}).join("")+'</dl>'
       +'<h4>Referência do instrumento</h4><p class="ref" style="font-size:1.7rem;line-height:1.5">'+refHtml(k)+'</p>'
