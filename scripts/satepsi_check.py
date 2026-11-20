@@ -24,7 +24,13 @@ MAP = ROOT / "scripts" / "satepsi-map.json"
 START = os.environ.get("SATEPSI_URL", "https://satepsi.cfp.org.br/")
 MIN_FAV = int(os.environ.get("MIN_FAVORAVEIS", "60"))
 
-# palavras que indicam cada lista no site
+# páginas públicas de cada lista (confirmadas no menu "Lista do SATEPSI")
+PAGES = {
+    "favoravel": "testesFavoraveis.cfm",
+    "desfavoravel": "testesDesfavoraveis.cfm",
+    "nao_privativo": "testesNaoPrivativos.cfm",
+}
+# palavras que indicam cada lista no site (reserva, se os endereços mudarem)
 TABS = {
     "favoravel": ["favorave", "favoráve", "testes favor"],
     "desfavoravel": ["desfavor"],
@@ -118,10 +124,13 @@ def scrape():
             total = read_tables(status)
             for _ in range(80):
                 nxt = None
-                for a in page.query_selector_all("a, button, li"):
+                cands = page.query_selector_all(".paginate_button.next, li.next a, .page-item.next a, a[rel=next], [class*=pag] a, [class*=pag] button")
+                for a in cands:
                     t = (a.inner_text() or "").strip().lower()
-                    cls = (a.get_attribute("class") or "").lower()
-                    if t and len(t) <= 12 and any(w in t for w in NEXT_WORDS) and "disabled" not in cls:
+                    cls = ((a.get_attribute("class") or "") + " " + (a.evaluate("e => e.parentElement ? e.parentElement.className : ''") or "")).lower()
+                    if "disabled" in cls:
+                        continue
+                    if "next" in cls or (t and len(t) <= 10 and any(w in t for w in NEXT_WORDS)):
                         nxt = a; break
                 if not nxt:
                     break
@@ -135,10 +144,39 @@ def scrape():
                 total += read_tables(status)
             return total
 
+        def close_modals():
+            try:
+                page.keyboard.press("Escape"); page.wait_for_timeout(300)
+                for b in page.query_selector_all(".modal.show [data-dismiss=modal], .modal.show .close"):
+                    if b.is_visible():
+                        b.click(); page.wait_for_timeout(300)
+            except Exception:
+                pass
+
         page.goto(START, wait_until="networkidle", timeout=90_000)
         snapshot("inicio")
-        # descobre abas ou links de cada lista
+        base = START if START.endswith("/") else START + "/"
+        done = set()
+        for status, path in PAGES.items():
+            try:
+                resp = page.goto(base + path, wait_until="networkidle", timeout=90_000)
+                if resp and resp.status >= 400:
+                    raise RuntimeError(f"HTTP {resp.status}")
+            except Exception as e:
+                print(f"[aviso] {path} indisponível ({e}); vou procurar pelo menu")
+                continue
+            close_modals(); show_all()
+            n = read_all_pages(status)
+            snapshot(status)
+            pages_seen.append({"status": status, "url": page.url, "linhas": n})
+            print(f"{status}: {n} linhas em {page.url}")
+            if n:
+                done.add(status)
+        page.goto(START, wait_until="networkidle", timeout=90_000)
+        # reserva: descobre abas ou links de cada lista
         for status, words in TABS.items():
+            if status in done:
+                continue
             target = None
             for el in page.query_selector_all("a, button, [role=tab], li"):
                 t = (el.inner_text() or "").strip().lower()
@@ -148,6 +186,7 @@ def scrape():
                 print(f"[aviso] não encontrei a aba de {status}")
                 continue
             href = target.get_attribute("href")
+            close_modals()
             try:
                 if href and not href.startswith(("#", "javascript")):
                     page.goto(page.url if href.startswith("?") else href if href.startswith("http") else START.rstrip("/") + "/" + href.lstrip("/"), wait_until="networkidle", timeout=90_000)
