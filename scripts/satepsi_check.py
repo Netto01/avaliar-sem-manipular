@@ -143,20 +143,29 @@ def scrape():
                 records.append(rec); got += 1
             return got
 
-        def submit_search():
-            btn = page.query_selector("form[action*='testes'] #btsalvar, form[action*='testes'] button[type=submit], #btsalvar")
-            if not btn:
-                return False
+        def submit_search(url):
+            """Envia a busca vazia (o site informa que, sem filtros, traz todos os testes da lista)."""
+            form = {"teste": "", "autor": "", "editora": "", "btsalvar": ""}
+            if "Favoraveis" in url:
+                form.update({"buscaTextual": "", "texto": ""})
             try:
-                with page.expect_navigation(wait_until="networkidle", timeout=90_000):
-                    btn.click()
-            except Exception:
+                resp = page.request.post(url, form=form, timeout=90_000)
+                html = resp.text()
+            except Exception as e:
+                print(f"[aviso] falha ao enviar a busca: {e}")
+                return False
+            if "accordion-item" not in html and "<table" not in html.lower():
+                # tenta pelo próprio formulário da página, incluindo o botão no envio
                 try:
-                    page.evaluate("() => { const f=[...document.forms].find(f => /testes/i.test(f.getAttribute('action')||'')); if (f) f.submit(); }")
+                    page.evaluate("""() => { const f=[...document.forms].find(f => /testes/i.test(f.getAttribute('action')||''));
+                        if (!f) return; const h=document.createElement('input'); h.type='hidden'; h.name='btsalvar'; h.value=''; f.appendChild(h); f.submit(); }""")
                     page.wait_for_load_state("networkidle", timeout=90_000)
+                    page.wait_for_timeout(1500)
+                    return True
                 except Exception as e:
-                    print(f"[aviso] falha ao enviar a busca: {e}")
+                    print(f"[aviso] busca pelo formulário falhou: {e}")
                     return False
+            page.set_content(html, wait_until="domcontentloaded")
             page.wait_for_timeout(1500)
             return True
 
@@ -206,7 +215,7 @@ def scrape():
                 print(f"[aviso] {path} indisponível ({e}); vou procurar pelo menu")
                 continue
             close_modals()
-            if submit_search():
+            if submit_search(base + path):
                 close_modals()
             show_all()
             n = read_all_pages(status)
