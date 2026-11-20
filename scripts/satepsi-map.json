@@ -1,1 +1,8 @@
-{"_comentario":"nome no NeuroMapa -> nome exato no SATEPSI, ou null se o instrumento não estiver no SATEPSI"}
+{
+  "_comentario": "Nome no NeuroMapa -> nome exato no SATEPSI (sem o '+' e sem a situação), ou null se o instrumento não estiver no SATEPSI.",
+  "Raven – Escala Geral / Avançadas": "Matrizes Progressivas Avançadas de Raven",
+  "d2-R": "Teste d2 - Revisado (d2-R)",
+  "Fluência Verbal (F-A-S e semântica)": null,
+  "Teste de Trilhas (TMT A e B)": null,
+  "Teste Hayling": null
+}

@@ -55,6 +55,8 @@ def acronyms(name):
     for t in toks:
         for part in re.split(r"[/]", t):
             letters = re.sub(r"[^A-Za-z]", "", part)
+            if re.search(r"[A-Za-z]", part) and re.search(r"\d", part) and len(norm(part).replace(" ", "")) >= 2:
+                out.add(norm(part).replace(" ", ""))
             if len(letters) >= 2 and sum(c.isupper() for c in letters) >= max(2, len(letters) - 1):
                 out.add(norm(part).replace(" ", ""))
     return {a for a in out if len(a) >= 2}
@@ -137,7 +139,11 @@ def scrape():
                     k, v = m.group(1).strip(), m.group(2).strip()
                     if v and len(campos) < 30:
                         campos[k] = v[:400]
+                name, nota = clean_name(name)
+                campos = parse_fields(det) or campos
                 rec = {"status": status, "nome": name, "celulas": [det[:1500]]}
+                if nota:
+                    rec["nota"] = nota
                 if campos:
                     rec["campos"] = campos
                 records.append(rec); got += 1
@@ -267,6 +273,32 @@ def scrape():
     return uniq, pages_seen
 
 
+STATUS_RE = re.compile(r"\s*(Favor[aá]vel|Desfavor[aá]vel.*|N[aã]o privativo.*|N[aã]o avaliado.*)$", re.I)
+LABELS = ["Autores", "Autor", "Editora", "Construto", "Público Alvo", "Idade da amostra de normatização", "Aplicação",
+          "Correção", "Data de aprovação", "Data da Plenária", "Data de Plenária", "Situação", "Motivo"]
+
+
+def clean_name(name):
+    name = re.sub(r"^\s*[+\-–]\s*", "", name).strip()
+    m = STATUS_RE.search(name)
+    nota = ""
+    if m:
+        nota = m.group(1).strip()
+        name = name[:m.start()].strip()
+    return name, nota
+
+
+def parse_fields(det):
+    pat = "(" + "|".join(re.escape(l) for l in sorted(LABELS, key=len, reverse=True)) + r")\s*:?\s+"
+    parts = re.split(pat, det, flags=re.I)
+    out = {}
+    for i in range(1, len(parts) - 1, 2):
+        k, v = parts[i].strip(), parts[i + 1].strip()
+        if v:
+            out[k] = v[:400]
+    return out
+
+
 def pick_name(rec):
     campos = rec.get("campos") or {}
     for k, v in campos.items():
@@ -281,11 +313,17 @@ def pick_name(rec):
 def match(ours, theirs, overrides):
     def raw_tokens(name):
         toks = set()
-        for t in re.findall(r"[A-Za-zÀ-ú0-9][A-Za-zÀ-ú0-9\-/]*", name):
-            for part in [t] + t.split("/"):
+        raw = re.findall(r"[A-Za-zÀ-ú0-9][A-Za-zÀ-ú0-9\-/]*", name)
+        flat = []
+        for t in raw:
+            for part in [t] + t.split("/") + t.split("-"):
                 k = norm(part).replace(" ", "")
                 if k:
                     toks.add(k)
+            flat.append(norm(t).replace(" ", ""))
+        for a, b in zip(flat, flat[1:]):
+            if a and b:
+                toks.add(a + b)
         return toks
     idx = [(r, norm(r["nome"]), raw_tokens(r["nome"])) for r in theirs]
     result = {}
@@ -301,6 +339,7 @@ def match(ours, theirs, overrides):
                             if hit else {"tipo_neuromapa": tipo, "status": "nao_encontrado", "nome_satepsi": want, "metodo": "manual"})
             continue
         acr, nn = acronyms(name), norm(name)
+        cands = []
         best, score, how = None, 0.0, ""
         for r, n, toks in idx:
             s = difflib.SequenceMatcher(None, nn, n).ratio()
@@ -309,11 +348,24 @@ def match(ours, theirs, overrides):
             words = nn.split()
             if words and any(len(w) >= 5 for w in words) and all(w in toks for w in words):
                 s = max(s, .86)
+            h = "sigla" if acr & toks else "texto"
+            if s >= .82:
+                cands.append((s, r, h))
             if s > score:
-                best, score, how = r, s, ("sigla" if acr & toks else "texto")
+                best, score, how = r, s, h
+        alts = 0
+        if cands:
+            fav = [c for c in cands if c[1]["status"] == "favoravel"]
+            pool = fav or cands
+            score, best, how = max(pool, key=lambda c: c[0])
+            alts = len({c[1]["status"] for c in cands}) - 1
         if best and score >= .82:
             result[name] = {"tipo_neuromapa": tipo, "status": best["status"], "nome_satepsi": best["nome"],
                             "metodo": how, "confianca": round(score, 2)}
+            if best.get("nota") and best["status"] != "favoravel":
+                result[name]["nota"] = best["nota"]
+            if alts:
+                result[name]["outras_versoes"] = True
         else:
             result[name] = {"tipo_neuromapa": tipo, "status": "nao_encontrado",
                             "sugestao": best["nome"] if best and score >= .6 else None, "confianca": round(score, 2)}
@@ -334,10 +386,12 @@ def summarize(new, old):
                            + (f" (SATEPSI: {info.get('nome_satepsi')})" if info.get("nome_satepsi") else ""))
     alerts = [f"- **{n}** está como privativo no guia, mas aparece como **desfavorável** no SATEPSI"
               for n, i in new["instrumentos"].items() if i["tipo_neuromapa"] == "P" and i["status"] == "desfavoravel"]
-    review = [f"- {n} ↔ {i.get('nome_satepsi')} (confiança {i.get('confianca')})"
-              for n, i in new["instrumentos"].items() if i.get("metodo") == "texto" and i.get("confianca", 1) < .9]
+    review = [f"- {n} ↔ {i.get('nome_satepsi')} (confiança {i.get('confianca')}"
+              + ("; há versões com situações diferentes no SATEPSI" if i.get("outras_versoes") else "") + ")"
+              for n, i in new["instrumentos"].items()
+              if (i.get("metodo") == "texto" and i.get("confianca", 1) < .9) or i.get("outras_versoes")]
     missing = [f"- {n}" + (f" (talvez: {i['sugestao']})" if i.get("sugestao") else "")
-               for n, i in new["instrumentos"].items() if i["tipo_neuromapa"] in ("P", "N") and i["status"] == "nao_encontrado"]
+               for n, i in new["instrumentos"].items() if i["tipo_neuromapa"] == "P" and i["status"] == "nao_encontrado"]
     old_names = {norm(t["nome"]) for t in (old or {}).get("satepsi", [])}
     novos = [f"- {t['nome']} ({LABEL[t['status']]})" for t in new["satepsi"] if old and norm(t["nome"]) not in old_names]
 
@@ -346,7 +400,7 @@ def summarize(new, old):
     lines.append(f"Lidos no site: **{c.get('favoravel', 0)}** favoráveis, **{c.get('desfavoravel', 0)}** desfavoráveis, "
                  f"**{c.get('nao_privativo', 0)}** não privativos.\n")
     for title, items in (("Mudanças de situação", changes), ("Alertas", alerts), ("Novos no SATEPSI", novos),
-                         ("Correspondências para conferir", review), ("Instrumentos do guia não encontrados", missing)):
+                         ("Correspondências para conferir", review), ("Privativos do guia não encontrados no SATEPSI", missing)):
         if items:
             lines.append(f"### {title}\n" + "\n".join(items[:80]) + ("\n- …" if len(items) > 80 else "") + "\n")
     if not old:
@@ -376,7 +430,7 @@ def main():
         "paginas": pages,
         "contagens": counts,
         "instrumentos": match(ours, theirs, overrides),
-        "satepsi": [{"nome": r["nome"], "status": r["status"], "campos": r.get("campos") or r["celulas"]} for r in theirs],
+        "satepsi": [{"nome": r["nome"], "status": r["status"], "nota": r.get("nota", ""), "campos": r.get("campos") or r["celulas"]} for r in theirs],
     }
     old = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else None
     body, changed = summarize(new, old)
