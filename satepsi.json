@@ -1,11 +1,11 @@
 {
- "verificado_em": "2026-11-20",
+ "verificado_em": "2026-11-23",
  "fonte": "https://satepsi.cfp.org.br/",
  "paginas": [
   {
    "status": "favoravel",
    "url": "https://satepsi.cfp.org.br/testesFavoraveis.cfm",
-   "linhas": 174
+   "linhas": 177
   },
   {
    "status": "desfavoravel",
@@ -19,7 +19,7 @@
   }
  ],
  "contagens": {
-  "favoravel": 173,
+  "favoravel": 176,
   "desfavoravel": 230,
   "nao_privativo": 25
  },
@@ -496,9 +496,10 @@
   },
   "WASI": {
    "tipo_neuromapa": "P",
-   "status": "nao_encontrado",
-   "sugestao": null,
-   "confianca": 0.38
+   "status": "favoravel",
+   "nome_satepsi": "Escala de Inteligência Wechsler Abreviada (WASI)",
+   "metodo": "sigla",
+   "confianca": 0.9
   },
   "SON-R 2½–7[a]": {
    "tipo_neuromapa": "P",
@@ -588,8 +589,8 @@
   "FAB – Bateria de Avaliação Frontal": {
    "tipo_neuromapa": "N",
    "status": "nao_encontrado",
-   "sugestao": "Bateria de Avaliação Cognitiva (BACog)",
-   "confianca": 0.7
+   "sugestao": "Inventário de Avaliação Ocupacional (IAO)",
+   "confianca": 0.67
   },
   "Teste do Desenho do Relógio": {
    "tipo_neuromapa": "N",
@@ -999,20 +1000,6 @@
    }
   },
   {
-   "nome": "Bateria de Avaliação Cognitiva (BACog)",
-   "status": "favoravel",
-   "nota": "Favorável",
-   "campos": {
-    "Autores": "FABIANO KOICH MIGUEL",
-    "Editora": "VETOR",
-    "Construto": "Processos Neuropsicológicos ,Processos perceptivos/cognitivos",
-    "Público Alvo": "Público geral, com idades entre 8 e 80 anos, alfabetizados, de todos os estados brasileiros, do ensino fundamental à pós-graduação. No entanto, para pessoas abaixo de 15 anos ou acima de 65 anos as normas devem ser utilizadas com maior cautela, devida à baixa representatividade amostral nos estudos psicométricos.",
-    "Idade da amostra de normatização": "DE 8 ATÉ 80 anos",
-    "Aplicação": "INDIVIDUAL INFORMATIZADO ON LINE (REMOTO)",
-    "Correção": "INFORMATIZADO Data aprovação 06/12/2025 Prazo dos estudos de normatização 06/12/2040 Prazo dos estudos de validade 06/12/2040"
-   }
-  },
-  {
    "nome": "Bateria de Avaliação das Altas Habilidades/Superdotação (BAAH/S)",
    "status": "favoravel",
    "nota": "Favorável",
@@ -1024,6 +1011,20 @@
     "Idade da amostra de normatização": "DE 9 ATÉ 15 anos",
     "Aplicação": "INDIVIDUAL COLETIVO NÃO INFORMATIZADO",
     "Correção": "NÃO INFORMATIZADO Data aprovação 13/11/2025 Prazo dos estudos de normatização 13/11/2040 Prazo dos estudos de validade 13/11/2040"
+   }
+  },
+  {
+   "nome": "Bateria de Avaliação de Funções Cognitivas (BACog)",
+   "status": "favoravel",
+   "nota": "Favorável",
+   "campos": {
+    "Autores": "FABIANO KOICH MIGUEL",
+    "Editora": "VETOR",
+    "Construto": "Processos Neuropsicológicos ,Processos perceptivos/cognitivos",
+    "Público Alvo": "Público geral, com idades entre 8 e 80 anos, alfabetizados, de todos os estados brasileiros, do ensino fundamental à pós-graduação. No entanto, para pessoas abaixo de 15 anos ou acima de 65 anos as normas devem ser utilizadas com maior cautela, devida à baixa representatividade amostral nos estudos psicométricos.",
+    "Idade da amostra de normatização": "DE 8 ATÉ 80 anos",
+    "Aplicação": "INDIVIDUAL INFORMATIZADO ON LINE (REMOTO)",
+    "Correção": "INFORMATIZADO Data aprovação 06/12/2025 Prazo dos estudos de normatização 06/12/2040 Prazo dos estudos de validade 06/12/2040"
    }
   },
   {
@@ -1636,6 +1637,21 @@
    }
   },
   {
+   "nome": "Escala de Inteligência Wechsler Abreviada (WASI)",
+   "status": "favoravel",
+   "nota": "Favorável",
+   "campos": {
+    "Autores": "CLARISSA MARCELI TRENTINI DENISE BALEM YATES VANESSA STUMPF HECK",
+    "Editora": "CASAPSI LIVRARIA E",
+    "EDITORA": "LTDA",
+    "Construto": "Inteligência",
+    "Público Alvo": "De 6 a 89 anos",
+    "Idade da amostra de normatização": "DE 6 ATÉ 89 anos",
+    "Aplicação": "INDIVIDUAL NÃO INFORMATIZADO",
+    "Correção": "NÃO INFORMATIZADO Data aprovação 18/11/2011 Prazo dos estudos de normatização 18/11/2026 - Atualização de normas em avaliação Prazo dos estudos de validade 18/11/2031"
+   }
+  },
+  {
    "nome": "Escala de Inteligência Wechsler para Adultos (WAIS III)",
    "status": "favoravel",
    "nota": "Favorável",
@@ -1870,7 +1886,7 @@
    "nota": "Favorável",
    "campos": {
     "Autores": "GUSTAVO KASTIEN TARTARO MAKILIM NUNES BAPTISTA",
-    "Editora": "VETOR",
+    "Editora": "NÃO SE APLICA",
     "Construto": "Processos afetivos/emocionais,Processos perceptivos/cognitivos",
     "Público Alvo": "Pessoas entre 11 e 17 anos, de ambos os sexos",
     "Idade da amostra de normatização": "DE 11 ATÉ 17 anos",
@@ -1940,7 +1956,7 @@
    "nota": "Favorável",
    "campos": {
     "Autores": "EFRAIM ROJAS BOCCALANDRO",
-    "Editora": "VETOR",
+    "Editora": "Vetor",
     "Construto": "Inteligência",
     "Público Alvo": "A partir de 18 anos",
     "Idade da amostra de normatização": "DE 18 ATÉ 66 anos",
@@ -2911,6 +2927,20 @@
    }
   },
   {
+   "nome": "Teste de Atenção Seletiva (TAS)",
+   "status": "favoravel",
+   "nota": "Favorável",
+   "campos": {
+    "Autores": "FÁBIO CAMILO DA SILVA",
+    "Editora": "VETOR",
+    "Construto": "Atenção,atenção seletiva",
+    "Público Alvo": "De 15 a 60 anos",
+    "Idade da amostra de normatização": "DE 15 ATÉ 60 anos",
+    "Aplicação": "INDIVIDUAL COLETIVO NÃO INFORMATIZADO",
+    "Correção": "INFORMATIZADO NÃO INFORMATIZADO Data aprovação 18/11/2011 Prazo dos estudos de normatização 18/11/2026 - Atualização de normas em avaliação Prazo dos estudos de validade 18/11/2031"
+   }
+  },
+  {
    "nome": "Teste de Atenção Visual (TAVIS 4)",
    "status": "favoravel",
    "nota": "Favorável",
@@ -3217,6 +3247,20 @@
     "Idade da amostra de normatização": "DE 6 ATÉ 92 anos",
     "Aplicação": "INDIVIDUAL NÃO INFORMATIZADO",
     "Correção": "NÃO INFORMATIZADO Data aprovação 24/04/2015 Prazo dos estudos de normatização 24/04/2030 Prazo dos estudos de validade 24/04/2035"
+   }
+  },
+  {
+   "nome": "Teste dos Cubos para avaliação do Raciocínio Viso-Espacial",
+   "status": "favoravel",
+   "nota": "Favorável",
+   "campos": {
+    "Autores": "FABIÁN JAVIER MARÍN RUEDA MONALISA MUNIZ",
+    "Editora": "VETOR",
+    "Construto": "Raciocínio visuoespacial",
+    "Público Alvo": "De 16 a 66 anos",
+    "Idade da amostra de normatização": "DE 16 ATÉ 66 anos",
+    "Aplicação": "INDIVIDUAL COLETIVO NÃO INFORMATIZADO",
+    "Correção": "NÃO INFORMATIZADO Data aprovação 18/11/2011 Prazo dos estudos de normatização 18/11/2026 - Atualização de normas em avaliação Prazo dos estudos de validade 18/11/2031"
    }
   },
   {
